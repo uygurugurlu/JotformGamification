@@ -5,10 +5,10 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
     },
     percentText: {
-        fontSize: 32
+        fontSize: 28
     },
     infoText: {
-        fontSize: 20,
+        fontSize: 15,
         textAlign: 'center'
     }
 });

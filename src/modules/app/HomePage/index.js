@@ -13,8 +13,8 @@ export default function HomePage ({ navigation }) {
         <Background>
             <HeaderProfile avatar={USERAVATAR1} name={'Uygur Uğurlu'} level={'12'} progress={0.8}/>
             <View style={styles.progressWheelsContainer}>
-                <ProgressWheel percent={50} text={'Daily Tasks'} wheelColor={'blue'} textColor={'red'} />
-                <ProgressWheel percent={31} text={'Weekly Tasks'} wheelColor={'blue'} textColor={'red'} />
+                <ProgressWheel percent={50} text={'Daily Tasks'} wheelColor={'#0fbf0f'} textColor={'#0fbf0f'} />
+                <ProgressWheel percent={31} text={'Weekly Tasks'} wheelColor={'#3068c6'} textColor={'#3068c6'} />
             </View>
 
             <Text>Home Page</Text>
