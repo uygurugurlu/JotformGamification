@@ -6,13 +6,37 @@ import FormsPage from "../modules/app/FormsPage";
 import ProfilePage from "../modules/app/ProfilePage";
 import RanksPage from "../modules/app/RanksPage";
 import UsersListPage from "../modules/app/UsersListPage";
+import {ORANGE} from "../constants/colors";
+import { getHomePageTitle } from "../functions/getHomePageTitle";
 
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
     return (
-            <Stack.Navigator initialRouteName="HomePage">
-                <Stack.Screen name="HomePage" component={HomePage} />
+            <Stack.Navigator
+                initialRouteName="HomePage"
+                screenOptions={{
+                    headerStyle: {
+                        backgroundColor: ORANGE
+                    },
+                    headerTitleStyle: {
+                        color: '#fff'
+                    },
+                    headerTintColor: '#fff',
+                }}
+            >
+                <Stack.Screen
+                    name="HomePage"
+                    component={HomePage}
+                    options={{
+                        headerStyle: {
+                            elevation: 0,
+                            shadowOpacity: 0,
+                            backgroundColor: ORANGE,
+                        },
+                        title: getHomePageTitle()
+                    }}
+                />
                 <Stack.Screen name="ChallengesPage" component={ChallengesPage} />
                 <Stack.Screen name="FormsPage" component={FormsPage} />
                 <Stack.Screen name="ProfilePage" component={ProfilePage} />

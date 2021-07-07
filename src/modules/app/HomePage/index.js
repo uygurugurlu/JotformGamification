@@ -3,12 +3,20 @@ import * as React from 'react';
 import { View, Text, Button } from 'react-native';
 import HeaderProfile from "../../components/HeaderProfileComponent";
 import {USERAVATAR1} from "../../../constants/images";
+import ProgressWheel from "../../components/ProgressWheelComponent";
+import {styles} from "./styles";
+import {Background} from "../../components/BackgroundComponent";
 
 
 export default function HomePage ({ navigation }) {
     return (
-        <View>
-                <HeaderProfile avatar={USERAVATAR1} name={'Uygur Uğurlu'} level={'5'} progress={0.8}/>
+        <Background>
+            <HeaderProfile avatar={USERAVATAR1} name={'Uygur Uğurlu'} level={'12'} progress={0.8}/>
+            <View style={styles.progressWheelsContainer}>
+                <ProgressWheel percent={50} text={'Daily Tasks'} wheelColor={'blue'} textColor={'red'} />
+                <ProgressWheel percent={31} text={'Weekly Tasks'} wheelColor={'blue'} textColor={'red'} />
+            </View>
+
             <Text>Home Page</Text>
             <Button
                 title="Forms"
@@ -34,6 +42,6 @@ export default function HomePage ({ navigation }) {
                 title="Badges"
                 onPress={() => navigation.navigate('BadgesPage')}
             />
-        </View>
+        </Background>
     );
 }
