@@ -1,14 +1,22 @@
 
 import * as React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View } from 'react-native';
 import HeaderProfile from "../../components/HeaderProfileComponent";
 import {USERAVATAR1} from "../../../constants/images";
 import ProgressWheel from "../../components/ProgressWheelComponent";
 import {styles} from "./styles";
 import {Background} from "../../components/BackgroundComponent";
+import {useState} from "react";
+
+import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
+import {DARKBLUE} from "../../../constants/colors";
+
+const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
 
-export default function HomePage ({ navigation }) {
+export default function HomePage () {
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
     return (
         <Background>
             <HeaderProfile avatar={USERAVATAR1} name={'Uygur Uğurlu'} level={'12'} progress={0.8}/>
@@ -16,32 +24,14 @@ export default function HomePage ({ navigation }) {
                 <ProgressWheel percent={50} text={'Daily Tasks'} wheelColor={'#0fbf0f'} textColor={'#0fbf0f'} />
                 <ProgressWheel percent={31} text={'Weekly Tasks'} wheelColor={'#3068c6'} textColor={'#3068c6'} />
             </View>
+            <ButtonGroup
+                onPress={(i) => setSelectedIndex(i)}
+                selectedIndex={selectedIndex}
+                buttons={buttons}
+                textStyle={{color:DARKBLUE}}
+            />
 
-            <Text>Home Page</Text>
-            <Button
-                title="Forms"
-                onPress={() => navigation.navigate('FormsPage')}
-            />
-            <Button
-                title="Ranks"
-                onPress={() => navigation.navigate('RanksPage')}
-            />
-            <Button
-                title="Tasks"
-                onPress={() => navigation.navigate('Tasks')}
-            />
-            <Button
-                title="Challenges"
-                onPress={() => navigation.navigate('ChallengesPage')}
-            />
-            <Button
-                title="Profile"
-                onPress={() => navigation.navigate('Profile')}
-            />
-            <Button
-                title="Badges"
-                onPress={() => navigation.navigate('BadgesPage')}
-            />
+
         </Background>
     );
 }
