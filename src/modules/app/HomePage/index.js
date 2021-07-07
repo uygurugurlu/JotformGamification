@@ -1,11 +1,14 @@
 
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
+import HeaderProfile from "../../components/HeaderProfileComponent";
+import {USERAVATAR1} from "../../../constants/images";
 
 
 export default function HomePage ({ navigation }) {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View>
+                <HeaderProfile avatar={USERAVATAR1} name={'Uygur Uğurlu'} level={'5'} progress={0.8}/>
             <Text>Home Page</Text>
             <Button
                 title="Forms"
@@ -29,7 +32,7 @@ export default function HomePage ({ navigation }) {
             />
             <Button
                 title="Badges"
-                onPress={() => navigation.navigate('Badges')}
+                onPress={() => navigation.navigate('BadgesPage')}
             />
         </View>
     );
