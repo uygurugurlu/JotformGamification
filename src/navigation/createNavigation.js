@@ -1,18 +1,22 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomePage from "../modules/app/HomePage";
-import LoginPage from "../modules/app/LoginPage";
 
-const Stack = createStackNavigator();
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeStack from "./homeStackNavigator";
+import ProfileStack from "./profileStackNavigator";
+import {NavigationContainer} from "@react-navigation/native";
+import TasksPage from "../modules/app/TasksPage";
+
+
+const Tab = createBottomTabNavigator();
 
 export default function CreateNavigation() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="HomePage">
-                <Stack.Screen name="HomePage" component={HomePage} />
-                <Stack.Screen name="Details" component={LoginPage} />
-            </Stack.Navigator>
+            <Tab.Navigator>
+                <Tab.Screen name="Home" component={HomeStack} />
+                <Tab.Screen name="Tasks" component={TasksPage} />
+                <Tab.Screen name="Profile" component={ProfileStack} />
+            </Tab.Navigator>
         </NavigationContainer>
     );
 }
