@@ -9,7 +9,6 @@ import {Background} from "../../components/BackgroundComponent";
 import {useState} from "react";
 
 import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
-import {DARKBLUE} from "../../../constants/colors";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
@@ -28,7 +27,10 @@ export default function HomePage () {
                 onPress={(i) => setSelectedIndex(i)}
                 selectedIndex={selectedIndex}
                 buttons={buttons}
-                textStyle={{color:DARKBLUE}}
+                textStyle={styles.buttonGroupTextStyle}
+                selectedTextStyle={styles.buttonGroupSelectedTextStyle}
+                selectedButtonStyle={styles.buttonGroupSelectedButtonStyle}
+                innerBorderStyle={styles.buttonGroupInnerBorderStyle}
             />
 
 

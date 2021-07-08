@@ -1,4 +1,5 @@
 import {StyleSheet} from "react-native";
+import {DARKBLUE, ORANGE} from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
     progressWheelsContainer: {
@@ -7,5 +8,20 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
 
     },
+    buttonGroupTextStyle: {
+        color: DARKBLUE,
+        fontSize: 15,
 
+    },
+    buttonGroupSelectedTextStyle: {
+        color: ORANGE,
+        fontSize: 15
+    },
+    buttonGroupSelectedButtonStyle: {
+        borderBottomWidth: 3,
+        borderColor: ORANGE
+    },
+    buttonGroupInnerBorderStyle: {
+        color: DARKBLUE
+    },
 });
