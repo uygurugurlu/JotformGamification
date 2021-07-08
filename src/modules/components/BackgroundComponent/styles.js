@@ -1,20 +1,15 @@
 import {StyleSheet} from "react-native";
-import {DEVICEHEIGHT, DEVICEWIDTH} from "../../../constants/general";
+import {DEVICEWIDTH} from "../../../constants/general";
 
 export const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        top:150,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'flex-end',
-        height: DEVICEHEIGHT
+    imageBackground: {
+        width: "100%",
+        overflow: 'hidden' // prevent image overflow the container
     },
-    backImage: {
-        resizeMode: 'contain',
+    image: {
+        resizeMode: "cover",
+        height: DEVICEWIDTH, // the image height
         width: DEVICEWIDTH,
-
-
+        top: undefined
     },
 })

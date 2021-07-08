@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { View, Text , Image} from 'react-native';
 import {styles} from "./styles";
-import {getLevelImage} from "../../../functions/getLevelImage";
+import {getLevelImage} from "../../../utils/getLevelImage";
 import * as Progress from 'react-native-progress';
 import {DARKBLUE} from "../../../constants/colors";
 

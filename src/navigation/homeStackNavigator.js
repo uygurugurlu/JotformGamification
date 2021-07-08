@@ -7,7 +7,7 @@ import ProfilePage from "../modules/app/ProfilePage";
 import RanksPage from "../modules/app/RanksPage";
 import UsersListPage from "../modules/app/UsersListPage";
 import {ORANGE} from "../constants/colors";
-import { getHomePageTitle } from "../functions/getHomePageTitle";
+import { getHomePageTitle } from "../utils/getHomePageTitle";
 
 const Stack = createStackNavigator();
 

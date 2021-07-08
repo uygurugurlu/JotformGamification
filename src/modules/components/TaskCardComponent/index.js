@@ -3,8 +3,8 @@ import {Image, Text, View} from "react-native";
 import {styles} from "./styles";
 import * as Progress from 'react-native-progress';
 import {GREEN} from "../../../constants/colors";
-import {getTeamLogo} from "../../../functions/getTeamLogo";
-
+import {getTeamLogo} from "../../../utils/getTeamLogo";
+7
 export const TaskCard = ({title, color, xp, total, completed, type}) => {
     return(
         <View style={[styles.container, {backgroundColor: color}]}>
