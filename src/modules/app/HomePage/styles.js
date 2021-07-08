@@ -1,5 +1,6 @@
 import {StyleSheet} from "react-native";
 import {DARKBLUE, ORANGE} from "../../../constants/colors";
+import {MARGINHORIZONTAL} from "../../../constants/general";
 
 export const styles = StyleSheet.create({
     progressWheelsContainer: {
@@ -25,7 +26,7 @@ export const styles = StyleSheet.create({
         color: DARKBLUE
     },
     buttonGroupContainer: {
-        marginHorizontal:23,
+        marginHorizontal: MARGINHORIZONTAL,
         marginBottom: 15
     },
     showMoreButton: {
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
 
     },
     sectionTitle: {
-        marginLeft: 23,
+        marginLeft: MARGINHORIZONTAL,
         color: ORANGE,
         fontSize: 15,
         fontWeight: 'bold',

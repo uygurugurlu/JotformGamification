@@ -12,6 +12,7 @@ import {Divider} from "react-native-elements/dist/divider/Divider";
 import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
 import {TaskCard} from "../../components/TaskCardComponent";
 import {BLUE, DARKBLUE, GREEN, YELLOW} from "../../../constants/colors";
+import {RanksComponent} from "../../components/RanksComponent";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
@@ -46,7 +47,7 @@ export default function HomePage ({navigation}) {
                 </TouchableOpacity>
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Season Ranks</Text>
-
+                <RanksComponent />
             </ScrollView>
 
 

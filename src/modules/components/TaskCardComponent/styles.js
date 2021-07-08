@@ -1,10 +1,10 @@
 import {StyleSheet} from "react-native";
-import {DEVICEWIDTH} from "../../../constants/general";
+import {DEVICEWIDTH, MARGINHORIZONTAL} from "../../../constants/general";
 
 export const styles = StyleSheet.create({
     container: {
         height: 70,
-        width: DEVICEWIDTH - 48,
+        width: DEVICEWIDTH - MARGINHORIZONTAL*2,
         backgroundColor: 'red',
         alignSelf: 'center',
         marginVertical: 5,
