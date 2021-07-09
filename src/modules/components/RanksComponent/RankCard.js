@@ -1,28 +1,9 @@
 import React from 'react';
 import {Image, Text, View} from "react-native";
 import {rankCardStyles} from "./styles";
-import {
-    BRONZE,
-    BRONZE_IMG,
-    DIAMOND,
-    DIAMOND_IMG,
-    GOLD, GOLD_IMG,
-    PLATINUM,
-    PLATINUM_IMG,
-    SILVER,
-    SILVER_IMG
-} from "../../../constants/ranks";
 
-const getLeagueImage = (league) => {
-    switch (league) {
-        case DIAMOND: return DIAMOND_IMG;
-        case PLATINUM: return PLATINUM_IMG;
-        case GOLD: return GOLD_IMG;
-        case SILVER: return SILVER_IMG;
-        case BRONZE: return BRONZE_IMG;
-        default: return null;
-    }
-}
+import {getLeagueImage} from "../../../utils/getLeagueImage";
+
 
 export const RankCard = ({rank, league, avatar, name, team, score }) => {
     return(

@@ -17,11 +17,11 @@ export const RanksComponent = ({navigation}) => {
                 <Text style={styles.titleText}>Name</Text>
                 <Text style={styles.titleText}>Score</Text>
             </View>
-            <RankCard rank={1} league={DIAMOND} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={200}/>
-            <RankCard rank={2} league={PLATINUM} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={200}/>
-            <RankCard rank={3} league={GOLD} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={200}/>
+            <RankCard rank={1} league={DIAMOND} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={2345}/>
+            <RankCard rank={2} league={PLATINUM} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={2245}/>
+            <RankCard rank={3} league={GOLD} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={2134}/>
             <DotsComponent color={'#fff'} onPress={() => navigation.navigate('RanksPage')}/>
-            <RankCard rank={4} league={SILVER} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={200}/>
+            <RankCard rank={92} league={SILVER} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={200}/>
             <Divider color={'rgb(200,200,200)'} style={styles.divider}/>
             <View style={styles.buttonContainer}>
                 <AwesomeButtonRick

@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         width: DEVICEWIDTH - MARGINHORIZONTAL*2,
         alignSelf: 'center',
         marginVertical: 5,
-        borderRadius: 20,
+        borderRadius: 15,
         flexDirection: 'row',
     },
     linearGradient: {

@@ -42,7 +42,7 @@ export const rankCardStyles = StyleSheet.create({
         alignItems: 'center',
     },
     rankText: {
-      fontSize: 33,
+      fontSize: 27,
       color: '#fff',
         fontWeight: '800'
 
