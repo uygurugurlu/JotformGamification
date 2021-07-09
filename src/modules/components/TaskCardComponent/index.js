@@ -11,9 +11,9 @@ export const TaskCard = ({title, color, xp, total, completed, type, color2}) => 
         <LinearGradient
             colors={color2 ? [color, color2] : [color, color]}
             style={styles.container}
-            start={{x: 0.5, y: 1}}
+            start={{x: 0.6, y: 0.2}}
+            opacity={0.9}
         >
-
                 <View style={styles.taskAvatarContainer}>
                     <View style={styles.taskAvatarBack}>
                         <Image source={getTeamLogo(type)} style={styles.taskAvatar}/>
@@ -21,7 +21,7 @@ export const TaskCard = ({title, color, xp, total, completed, type, color2}) => 
                 </View>
                 <View style={styles.taskDetailsContainer}>
                     <Text style={styles.title}>{title}</Text>
-                    <Progress.Bar width={null} progress={1.0 * completed/total} color={GREEN} unfilledColor={'#fff'}/>
+                    <Progress.Bar borderWidth={0} width={null} progress={1.0 * completed/total} color={GREEN} unfilledColor={'#fff'}/>
                 </View>
                 <View style={styles.taskStatsContainer}>
                     <Text style={styles.title}>

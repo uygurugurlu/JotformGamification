@@ -50,9 +50,13 @@ export default function HomePage ({navigation}) {
                 <RanksComponent navigation={navigation}/>
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Challenges</Text>
-                <TaskCard title={"Fix User Login Bug"} total={10} completed={2} color={DARKBLUE} color2={RED} xp={89} type={'mobile'}/>
-                <TaskCard title={"Fix User Login Bug"} total={10} completed={4} color={YELLOW} xp={89} type={'mobile'}/>
-                <TaskCard title={"Fix User Login Bug"} total={10} completed={9} color={BLUE} xp={89} type={'mobile'}/>
+                <TaskCard title={"Make 1000 Commits"} total={1000} completed={22} color={DARKBLUE} color2={RED} xp={1000} type={'mobile'}/>
+                <TaskCard title={"Make 1000 Commits"} total={1000} completed={22} color={DARKBLUE} color2={RED} xp={1000} type={'mobile'}/>
+                <TaskCard title={"Make 1000 Commits"} total={1000} completed={22} color={DARKBLUE} color2={RED} xp={1000} type={'mobile'}/>
+                <TouchableOpacity onPress={() => navigation.navigate('ChallengesPage')}>
+                    <Text style={styles.showMoreButton}>Show all</Text>
+                </TouchableOpacity>
+                <View  style={styles.space}/>
             </ScrollView>
 
 

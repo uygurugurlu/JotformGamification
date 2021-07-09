@@ -43,5 +43,8 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         marginVertical: 10
+    },
+    space: {
+        height: 20,
     }
 });
