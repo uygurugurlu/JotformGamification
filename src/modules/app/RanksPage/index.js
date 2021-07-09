@@ -1,12 +1,16 @@
 
 import * as React from 'react';
-import {View,  FlatList, Image} from 'react-native';
+import {View, FlatList, Image, Text} from 'react-native';
 import {styles} from "./styles";
 import {RankCard} from "../../components/RanksComponent/RankCard";
 import {DIAMOND} from "../../../constants/ranks";
 import {KINGCROWN, USERAVATAR1} from "../../../constants/images";
 import {Background} from "../../components/BackgroundComponent";
 import {getLeagueImage} from "../../../utils/getLeagueImage";
+import {Divider} from "react-native-elements/dist/divider/Divider";
+import {SearchBar} from "react-native-elements/dist/searchbar/SearchBar";
+import {useState} from "react";
+import {SEARCH} from "../../../constants/icons";
 
 const data= [
     {rank: 1, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "2345"},
@@ -26,16 +30,24 @@ const data= [
 
 
 export default function RanksPage () {
+    const [search, setSearch] = useState('');
     const renderItem = ({ item }) => {
         if(item.rank === 1) {
             return(
                 <View style={styles.firstContainer}>
+                    <Text style={styles.rankOneText}>1.</Text>
+                    <Text style={styles.scoreText}>{"Score\n"+item.score}</Text>
                     <View style={styles.avatarContainer}>
                         <Image source={item.avatar} style={styles.avatar}/>
                         <Image source={getLeagueImage(DIAMOND)} style={styles.leagueImage}/>
                         <Image source={KINGCROWN} style={styles.crown}/>
+                    </View>
+                    <View style={styles.textsContainer}>
+                        <Text style={styles.nameText}>{item.name}</Text>
+                        <Text style={styles.teamText}>{item.team}</Text>
 
                     </View>
+                    <Divider  style={styles.divider}/>
                 </View>
             );
         }
@@ -43,7 +55,18 @@ export default function RanksPage () {
     };
     return (
         <Background>
+                <SearchBar
+                    placeholder={'Search User'}
+                    onChangeText={(s) => setSearch(s)}
+                    value={search}
+                    containerStyle={styles.searchContainer}
+                    placeholderTextColor={'rgb(220,220,220)'}
+                    inputStyle={styles.searchInput}
+                    searchIcon={SEARCH}
+                    leftIcon={SEARCH}
+                />
             <View style={styles.container} opacity={0.9}>
+
                 <FlatList data={data} renderItem={renderItem} keyExtractor={item => '' + item.rank}/>
 
             </View>

@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native";
 import {MARGINHORIZONTAL} from "../../../constants/general";
-import {DARKBLUE} from "../../../constants/colors";
+import {DARKBLUE, ORANGE} from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,8 +8,31 @@ export const styles = StyleSheet.create({
 
     },
     firstContainer: {
-        height: 150,
-        backgroundColor: 'red'
+        height: 190,
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+    searchContainer: {
+        backgroundColor: DARKBLUE,
+        opacity: 0.9,
+        borderBottomColor: 'transparent',
+        borderTopColor: 'transparent'
+    },
+    searchInput: {
+        color: '#fff'
+    },
+    rankOneText: {
+        position: 'absolute',
+        fontSize: 50,
+        color:'#fff',
+        left: 40
+    },
+    scoreText: {
+        position: 'absolute',
+        fontSize: 18,
+        textAlign:'center',
+        color:'#fff',
+        right: 40
     },
     avatarContainer: {
         flex: 1,
@@ -30,9 +53,26 @@ export const styles = StyleSheet.create({
     },
     crown: {
         position: 'absolute',
-        height: 50,
-        width: 50,
-        top: 7,
+        height: 40,
+        width: 40,
+        top: 0,
 
+    },
+    textsContainer: {
+        flex: 0.3,
+        justifyContent: 'space-evenly'
+    },
+    nameText: {
+        color: '#fff',
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    teamText: {
+        color: '#fff',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    divider: {
+        marginVertical: 20
     }
 })
