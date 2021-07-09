@@ -47,7 +47,10 @@ export default function HomePage ({navigation}) {
                 </TouchableOpacity>
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Season Ranks</Text>
-                <RanksComponent />
+                <RanksComponent navigation={navigation}/>
+                <Divider style={{marginVertical: 10}}/>
+                <Text style={styles.sectionTitle}>Challenges</Text>
+
             </ScrollView>
 
 

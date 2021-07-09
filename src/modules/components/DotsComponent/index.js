@@ -13,6 +13,5 @@ export const DotsComponent = ({color, onPress}) => {
                 <View style={[styles.dot, {backgroundColor: color}]} />
             </TouchableOpacity>
         </View>
-
-)
+    );
 }

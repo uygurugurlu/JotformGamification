@@ -6,6 +6,28 @@ export const styles = StyleSheet.create({
         marginHorizontal: MARGINHORIZONTAL,
         backgroundColor: DARKBLUE,
         borderRadius: 15,
+    },
+    titleContainer: {
+        height: 30,
+        marginTop: 10,
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 25,
+        marginRight: 35,
+        alignItems: 'center'
+
+    },
+    titleText: {
+      color:'rgb(200,200,200)'
+    },
+    divider: {
+        marginTop: 10,
+    },
+    buttonContainer: {
+        justifyContent: 'center',
+        alignItems:'center',
+        marginVertical: 10,
+        marginBottom: 10
     }
 })
 export const rankCardStyles = StyleSheet.create({

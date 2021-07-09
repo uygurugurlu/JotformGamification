@@ -6,7 +6,7 @@ import {styles} from "./styles";
 export const Background = ({children}) => {
     return (
         <View>
-            <ImageBackground
+            <ImageBackground  
                 source={BACKGROUNDIMAGE}
                 style={styles.imageBackground}
                 imageStyle={styles.image}
