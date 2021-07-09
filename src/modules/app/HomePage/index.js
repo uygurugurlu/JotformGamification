@@ -11,7 +11,7 @@ import {useState} from "react";
 import {Divider} from "react-native-elements/dist/divider/Divider";
 import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
 import {TaskCard} from "../../components/TaskCardComponent";
-import {BLUE, DARKBLUE, GREEN, YELLOW} from "../../../constants/colors";
+import {BLUE, DARKBLUE, GREEN, RED, YELLOW} from "../../../constants/colors";
 import {RanksComponent} from "../../components/RanksComponent";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
@@ -50,7 +50,9 @@ export default function HomePage ({navigation}) {
                 <RanksComponent navigation={navigation}/>
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Challenges</Text>
-
+                <TaskCard title={"Fix User Login Bug"} total={10} completed={2} color={DARKBLUE} color2={RED} xp={89} type={'mobile'}/>
+                <TaskCard title={"Fix User Login Bug"} total={10} completed={4} color={YELLOW} xp={89} type={'mobile'}/>
+                <TaskCard title={"Fix User Login Bug"} total={10} completed={9} color={BLUE} xp={89} type={'mobile'}/>
             </ScrollView>
 
 

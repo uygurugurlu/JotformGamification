@@ -5,11 +5,16 @@ export const styles = StyleSheet.create({
     container: {
         height: 70,
         width: DEVICEWIDTH - MARGINHORIZONTAL*2,
-        backgroundColor: 'red',
         alignSelf: 'center',
         marginVertical: 5,
         borderRadius: 20,
         flexDirection: 'row',
+    },
+    linearGradient: {
+        flex: 1,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 5
     },
     taskAvatarContainer: {
         flex: 6.12,
