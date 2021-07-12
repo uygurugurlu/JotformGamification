@@ -64,12 +64,17 @@ export default function RanksPage () {
                     inputStyle={styles.searchInput}
                     searchIcon={SEARCH}
                     leftIcon={SEARCH}
+                    lightTheme={true}
+                    showCancel={true}
+                    cancelButtonProps={false}
+                    cancelButtonTitle={false}
+                    round={false}
                 />
             <View style={styles.container} opacity={0.9}>
 
                 <FlatList data={data} renderItem={renderItem} keyExtractor={item => '' + item.rank}/>
-
             </View>
+
         </Background>
 
     );

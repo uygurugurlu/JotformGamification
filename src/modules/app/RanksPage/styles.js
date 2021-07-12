@@ -1,6 +1,5 @@
 import {StyleSheet} from "react-native";
-import {MARGINHORIZONTAL} from "../../../constants/general";
-import {DARKBLUE, ORANGE} from "../../../constants/colors";
+import {DARKBLUE} from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
     container: {
@@ -74,5 +73,8 @@ export const styles = StyleSheet.create({
     },
     divider: {
         marginVertical: 20
+    },
+    empty: {
+        height: 100
     }
 })
