@@ -39,8 +39,8 @@ export const styles = StyleSheet.create({
     },
     scoreContainer: {
         position: 'absolute',
-        height: 85,
-        width: 85,
+        height: 75,
+        width: 75,
         backgroundColor: DARKBLUE,
         right: 25,
         borderRadius: 15,
@@ -50,20 +50,20 @@ export const styles = StyleSheet.create({
     },
     scoreText: {
         color:'#fff',
-        fontSize: 13,
+        fontSize: 10,
         fontWeight: '600',
         textAlign:'center'
     },
     score: {
         color: '#fff',
-        fontSize: 26,
+        fontSize: 22,
         fontWeight: '800',
         textAlign: 'center',
     },
     rankContainer: {
         position: 'absolute',
-        height: 85,
-        width: 85,
+        height: 75,
+        width: 75,
         backgroundColor: YELLOW,
         left: 25,
         borderRadius: 15,
