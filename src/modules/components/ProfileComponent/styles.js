@@ -1,6 +1,6 @@
 
 import { StyleSheet } from "react-native";
-import {DARKBLUE, ORANGE, YELLOW} from "../../../constants/colors";
+import {BLUE, DARKBLUE, ORANGE} from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
     container: {
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         height: 75,
         width: 75,
-        backgroundColor: YELLOW,
+        backgroundColor: BLUE,
         left: 25,
         borderRadius: 15,
         justifyContent:'center',

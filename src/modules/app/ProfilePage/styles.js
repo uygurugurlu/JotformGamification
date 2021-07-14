@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import {GREEN, ORANGE, YELLOW} from "../../../constants/colors";
-import {DEVICEWIDTH} from "../../../constants/general";
+import {DARKBLUE, GREEN, ORANGE, YELLOW} from "../../../constants/colors";
+import {DEVICEWIDTH, MARGINHORIZONTAL} from "../../../constants/general";
 
 
 export const styles = StyleSheet.create({
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     xpText: {
         textAlign:'center',
         color: GREEN,
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: '700',
     },
     progressContainer: {
@@ -41,13 +41,61 @@ export const styles = StyleSheet.create({
     },
     levelPrevText: {
         color: GREEN,
-        fontSize: 21,
+        fontSize: 18,
     },
     levelNextText: {
         color: YELLOW,
-        fontSize: 21
+        fontSize: 18
     },
     divider: {
         marginVertical: 15,
+    },
+    cardsContainer: {
+        height: 110,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        marginHorizontal:MARGINHORIZONTAL,
+        alignItems:'center'
+    },
+    card: {
+        height: 90,
+        borderRadius: 15,
+        width: 100,
+        backgroundColor:DARKBLUE,
+        justifyContent:'center',
+    },
+    cardTitle: {
+        color:'#fff',
+        textAlign:'center',
+        fontSize: 13
+
+    },
+    cardStat: {
+        color:'#fff',
+        textAlign:'center',
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    badgeContainer: {
+        height: 200,
+
+    },
+    sectionTitle: {
+        marginLeft: MARGINHORIZONTAL,
+        color: ORANGE,
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginVertical: 10
+    },
+    badgeIconContainer: {
+      justifyContent:'center',
+      alignItems:'center'
+    },
+    badgeIcon: {
+        height: 40,
+        width: 40,
+        resizeMode:'contain',
+
     }
+
 })

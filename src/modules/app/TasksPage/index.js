@@ -44,7 +44,12 @@ export default function TasksPage () {
                     innerBorderStyle={styles.buttonGroupInnerBorderStyle}
                     containerStyle={styles.buttonGroupContainer}
                 />
-                <FlatList data={data} renderItem={renderItem} keyExtractor={(i) => '' + i.id}/>
+                <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={(i) => '' + i.id}
+                    ListFooterComponentStyle={<View style={{height:100} } />}
+                />
             </View>
         </Background>
 
