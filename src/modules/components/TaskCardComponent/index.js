@@ -6,7 +6,7 @@ import {GREEN} from "../../../constants/colors";
 import {getTeamLogo} from "../../../utils/getTeamLogo";
 import { LinearGradient } from 'expo-linear-gradient';
 
-export const TaskCard = ({title, color, xp, total, completed, type, color2}) => {
+export const TaskCard = ({title, color, xp, total, completed, type, color2, isExpanded = false}) => {
     return(
         <LinearGradient
             colors={color2 ? [color, color2] : [color, color]}
@@ -21,7 +21,13 @@ export const TaskCard = ({title, color, xp, total, completed, type, color2}) => 
                 </View>
                 <View style={styles.taskDetailsContainer}>
                     <Text style={styles.title}>{title}</Text>
-                    <Progress.Bar borderWidth={0} width={null} progress={1.0 * completed/total} color={GREEN} unfilledColor={'#fff'}/>
+                    <Progress.Bar
+                        borderWidth={0}
+                        width={null}
+                        progress={1.0 * completed/total}
+                        color={GREEN}
+                        unfilledColor={'#fff'}
+                    />
                 </View>
                 <View style={styles.taskStatsContainer}>
                     <Text style={styles.title}>

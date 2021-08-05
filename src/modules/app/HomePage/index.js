@@ -13,13 +13,17 @@ import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
 import {TaskCard} from "../../components/TaskCardComponent";
 import {BLUE, DARKBLUE, GREEN, RED, YELLOW} from "../../../constants/colors";
 import {RanksComponent} from "../../components/RanksComponent";
+import {useDispatch} from 'react-redux';
+import { useSelector } from "react-redux";
+import {firstTimeLogin} from "../../../store/Actions";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
-
 export default function HomePage ({navigation}) {
     const [selectedIndex, setSelectedIndex] = useState(0);
-
+    const isFirst = useSelector((state) => state.mainReducer.isFirstLogin);
+    const dispatch = useDispatch();
+    dispatch(firstTimeLogin(true));
     return (
         <Background>
             <ScrollView>
@@ -64,3 +68,4 @@ export default function HomePage ({navigation}) {
         </Background>
     );
 }
+
