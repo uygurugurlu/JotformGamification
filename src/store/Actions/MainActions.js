@@ -1,11 +1,16 @@
 import {
   SET_FIRST_TIME_LOGIN,
+  SET_LOGGED_IN
 } from './ActionTypes';
 import {getUserForms} from "../../api/api";
 export const firstTimeLogin = (isFirst) => ({
   type: SET_FIRST_TIME_LOGIN,
   isFirst,
-});
+})
+export const setLoggedIn = (isLoggedIn) => ({
+  type: SET_LOGGED_IN,
+  isLoggedIn,
+})
 
 const fetchUserForms = (dispatch, getState) => {
   // Make an async HTTP request

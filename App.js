@@ -5,6 +5,9 @@ import configureStore from "./src/store/ConfigureStore";
 import { Provider } from 'react-redux';
 import firebase from "firebase/app";
 import "firebase/database";
+import {storeAsyncData} from "./src/utils/storeAsyncData";
+import {readAsyncData} from "./src/utils/readAsyncData";
+import {firebaseConfig} from "./firebase";
 
 function storeHighScore(userId, score) {
     firebase
@@ -22,6 +25,7 @@ function setupHighscoreListener(userId) {
 }
 
 export default function App() {
+    firebase.initializeApp(firebaseConfig);
 
     storeHighScore("20", 200);
     setupHighscoreListener("20");

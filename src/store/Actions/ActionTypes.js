@@ -1,5 +1,5 @@
 /*  MAIN ACTIONS   */
 export const SET_FIRST_TIME_LOGIN = 'SET_FIRST_TIME_LOGIN';
-
+export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 
 

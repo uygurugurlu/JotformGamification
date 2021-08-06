@@ -1,3 +1,4 @@
+
 export const firebaseConfig = {
     apiKey: "AIzaSyAV53tYIChRDZCdfILwuuKuBycJl7lSRzw",
     authDomain: "jotform-gamification.firebaseapp.com",
