@@ -1,5 +1,4 @@
 /*  MAIN ACTIONS   */
 export const SET_FIRST_TIME_LOGIN = 'SET_FIRST_TIME_LOGIN';
-export const SET_LOGGED_IN = 'SET_LOGGED_IN';
-
-
+export const USER = 'USER';
+export const SET_SPLASH_VISIBLE = 'SET_SPLASH_VISIBLE';

@@ -1,13 +1,16 @@
 import update from 'react-addons-update';
 import {
   SET_FIRST_TIME_LOGIN,
-  SET_LOGGED_IN,
+  SET_SPLASH_VISIBLE,
+  USER
 } from '../Actions/ActionTypes';
 
 const initialState = {
   isLoggedIn: false,
   isFirstLogin: false,
-  user_agent: '',
+  user: null,
+  splashVisible: true,
+  forms: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,9 +19,13 @@ const reducer = (state = initialState, action) => {
       return (state = update(state, {
         isFirstLogin: { $set: action.isFirst },
       }));
-    case SET_LOGGED_IN:
+    case SET_SPLASH_VISIBLE:
       return (state = update(state, {
-        isLoggedIn: { $set: action.isLoggedIn },
+        splashVisible: { $set: action.splashVisible },
+      }));
+    case USER:
+      return (state = update(state, {
+        user: { $set: action.user },
       }));
     default:
       return state;

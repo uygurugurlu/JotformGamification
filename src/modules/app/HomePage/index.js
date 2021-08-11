@@ -15,7 +15,7 @@ import {BLUE, DARKBLUE, GREEN, RED, YELLOW} from "../../../constants/colors";
 import {RanksComponent} from "../../components/RanksComponent";
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
-import {firstTimeLogin} from "../../../store/Actions";
+import {firstTimeLogin, fetchUserForms} from "../../../store/Actions";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
@@ -24,6 +24,7 @@ export default function HomePage ({navigation}) {
     const isFirst = useSelector((state) => state.mainReducer.isFirstLogin);
     const dispatch = useDispatch();
     dispatch(firstTimeLogin(true));
+    //dispatch(fetchUserForms());
     return (
         <Background>
             <ScrollView>

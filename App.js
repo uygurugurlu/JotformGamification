@@ -26,9 +26,6 @@ function setupHighscoreListener(userId) {
 
 export default function App() {
     firebase.initializeApp(firebaseConfig);
-
-    storeHighScore("20", 200);
-    setupHighscoreListener("20");
     return (
         <Provider store={configureStore()}>
             <SafeAreaProvider>

@@ -1,5 +1,5 @@
 export {
   firstTimeLogin,
-  setLoggedIn,
-
+  setUser,
+  setSplashVisible,
 } from './MainActions';

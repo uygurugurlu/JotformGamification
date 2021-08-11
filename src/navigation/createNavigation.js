@@ -7,6 +7,9 @@ import {NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import TasksPage from "../modules/app/TasksPage";
 import { createStackNavigator } from '@react-navigation/stack';
 import {ORANGE} from "../constants/colors";
+import {useSelector} from "react-redux";
+import SplashPage from "../modules/app/SplashPage";
+import LoginStack from "./loginStackNavigator";
 
 
 const Tab = createBottomTabNavigator();
@@ -46,6 +49,17 @@ function TasksScreen() {
 }
 
 export default function CreateNavigation() {
+    const splashVisible = useSelector((state) => state.mainReducer.splashVisible);
+    const user = useSelector((state) => state.mainReducer.user);
+    if(splashVisible)
+        return <SplashPage />
+    else if(user === null) {
+        return (
+            <NavigationContainer theme={MyTheme}>
+                <LoginStack />
+            </NavigationContainer>
+            )
+    }
     return (
         <NavigationContainer theme={MyTheme}>
             <Tab.Navigator>

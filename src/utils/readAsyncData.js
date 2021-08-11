@@ -16,7 +16,7 @@ export const readAsyncData = async (key) => {
            return isJson(value) ? JSON.parse(value) : value;
         }
         console.warn("Data with key " + key + " is not stored");
-        return -1;
+        return null;
     } catch(e) {
         console.error("Error reading data with key: ", key)
     }
