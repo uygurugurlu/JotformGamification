@@ -2,7 +2,7 @@ import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
 
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 import mainReducer from './Reducers/MainReducer';
 
 const rootReducer = combineReducers({
@@ -22,7 +22,11 @@ const enhancer = composeEnhancers(
 );
 
 const configureStore = () => {
-  return createStore(rootReducer, enhancer);
+  return createStore(rootReducer, composeWithDevTools(
+      applyMiddleware(thunk, logger),
+      // other store enhancers if any
+  ));
 };
+
 
 export default configureStore;

@@ -6090,6 +6090,11 @@
     "string_decoder" "~1.1.1"
     "util-deprecate" "~1.0.1"
 
+"redux-devtools-extension@^2.13.9":
+  "integrity" "sha512-cNJ8Q/EtjhQaZ71c8I9+BPySIBVEKssbPpskBfsXqb8HJ002A3KRVHfeRzwRo6mGPqsm7XuHTqNSNeS1Khig0A=="
+  "resolved" "https://registry.npmjs.org/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz"
+  "version" "2.13.9"
+
 "redux-devtools-instrument@^1.10.0":
   "integrity" "sha512-X8JRBCzX2ADSMp+iiV7YQ8uoTNyEm0VPFPd4T854coz6lvRiBrFSqAr9YAS2n8Kzxx8CJQotR0QF9wsMM+3DvA=="
   "resolved" "https://registry.npmjs.org/redux-devtools-instrument/-/redux-devtools-instrument-1.10.0.tgz"
@@ -6120,7 +6125,7 @@
   "resolved" "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz"
   "version" "2.3.0"
 
-"redux@^3.4.0 || ^4.0.0", "redux@^3.5.2 || ^4.0.0", "redux@^4.0.0", "redux@^4.1.0":
+"redux@^3.1.0 || ^4.0.0", "redux@^3.4.0 || ^4.0.0", "redux@^3.5.2 || ^4.0.0", "redux@^4.0.0", "redux@^4.1.0":
   "integrity" "sha512-uI2dQN43zqLWCt6B/BMGRMY6db7TTY4qeHHfGeKb3EOhmOKjU3KdWvNLJyqaHRksv/ErdNH7cFZWg9jXtewy4g=="
   "resolved" "https://registry.npmjs.org/redux/-/redux-4.1.0.tgz"
   "version" "4.1.0"

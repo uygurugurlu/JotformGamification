@@ -17,10 +17,10 @@ function storeHighScore(userId, score) {
             highscore: score,
         });
 }
-function setupHighscoreListener(userId) {
+function setupUserListener(userId) {
     firebase.database().ref('users/' + userId).on('value', (snapshot) => {
-        const highscore = snapshot.val().highscore;
-        console.log("New high score: " + highscore);
+        const user = snapshot.val();
+        console.log("user: " + user);
     });
 }
 

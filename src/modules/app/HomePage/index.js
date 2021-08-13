@@ -1,12 +1,12 @@
 
 import * as React from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import HeaderProfile from "../../components/HeaderProfileComponent";
 import {USERAVATAR1} from "../../../constants/images";
 import ProgressWheel from "../../components/ProgressWheelComponent";
 import {styles} from "./styles";
 import {Background} from "../../components/BackgroundComponent";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import {Divider} from "react-native-elements/dist/divider/Divider";
 import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
@@ -16,15 +16,40 @@ import {RanksComponent} from "../../components/RanksComponent";
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import {firstTimeLogin, fetchUserForms} from "../../../store/Actions";
+import {getFormDetail} from "../../../api/api";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
+const setForms = (forms) => {
+    let formList = {}
+    for (let i in forms) {
+
+    }
+    getFormDetail(id)
+        .then(res => {
+            console.log(res.data.content.title)
+            return res.data.content.title
+        }).catch(e => {
+            return ""
+        })
+}
+const renderFormItem =  (item) => (
+    <TaskCard
+        title={getFormDetail(item.item)}
+        total={1}
+        completed={0}
+        color={DARKBLUE}
+        xp={10}
+        type={'mobile'}
+    />
+)
 export default function HomePage ({navigation}) {
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const isFirst = useSelector((state) => state.mainReducer.isFirstLogin);
-    const dispatch = useDispatch();
-    dispatch(firstTimeLogin(true));
+    const [forms, setFormsState] = useState();
+    const user = useSelector((state) => state.mainReducer.user);
+    //const dispatch = useDispatch();
     //dispatch(fetchUserForms());
+
     return (
         <Background>
             <ScrollView>
@@ -61,6 +86,12 @@ export default function HomePage ({navigation}) {
                 <TouchableOpacity onPress={() => navigation.navigate('ChallengesPage')}>
                     <Text style={styles.showMoreButton}>Show all</Text>
                 </TouchableOpacity>
+                <Text style={styles.sectionTitle}>Forms</Text>
+                <FlatList
+                    data={user.forms}
+                    renderItem={renderFormItem}
+                    keyExtractor={item => item}
+                />
                 <View  style={styles.space}/>
             </ScrollView>
 

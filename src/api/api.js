@@ -23,16 +23,13 @@ export const getUserForms = async () => await api.get(`${BASE_URL}${apiEndpoints
     }
 });
 
-export const loginUser = async (username, password) => await api.get(`${BASE_URL}${apiEndpoints.login}`, {
+export const loginUser = async (username, password) => await api.post(`${BASE_URL}${apiEndpoints.login}?username=${username}&password=${password}`, {
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
-    params: {
-        username: username,
-        password: password,
-    }
+
 });
 
 export const logoutUser = async () => await api.get(`${BASE_URL}${apiEndpoints.logout}`, {
@@ -43,7 +40,7 @@ export const logoutUser = async () => await api.get(`${BASE_URL}${apiEndpoints.l
     },
 });
 
-export const getFormDetail  = async () => await api.get(`${BASE_URL}${apiEndpoints.form}`, {
+export const getFormDetail  = async (id) => await api.get(`${BASE_URL}${apiEndpoints.form}/${id}`, {
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         Accept: 'application/json',
