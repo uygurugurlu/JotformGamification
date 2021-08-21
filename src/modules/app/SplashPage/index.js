@@ -12,11 +12,9 @@ async function closeSplash () {
     setTimeout(() => {
         if(userData === null) {
             dispatch(setUser(userData));
-            dispatch(setSplashVisible(false));
         }
-        else {
-            dispatch(setSplashVisible(false));
-        }
+        dispatch(setSplashVisible(false));
+
     }, 1000)
 
 }

@@ -16,40 +16,67 @@ import {RanksComponent} from "../../components/RanksComponent";
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import {firstTimeLogin, fetchUserForms} from "../../../store/Actions";
-import {getFormDetail} from "../../../api/api";
+import {getFormDetail, getFormQuestions} from "../../../api/api";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
 const setForms = (forms) => {
-    let formList = {}
+    let formList = []
     for (let i in forms) {
-
+        let formItem = getFormDetail(forms[i])
+        formList.push(formItem)
     }
-    getFormDetail(id)
-        .then(res => {
-            console.log(res.data.content.title)
-            return res.data.content.title
-        }).catch(e => {
-            return ""
-        })
+    return formList
+}
+const formPressed = async (item) => {
+    let questions = await getFormQuestions(item.data.content.id)
+    console.log(questions)
 }
 const renderFormItem =  (item) => (
-    <TaskCard
-        title={getFormDetail(item.item)}
-        total={1}
-        completed={0}
-        color={DARKBLUE}
-        xp={10}
-        type={'mobile'}
-    />
+    <TouchableOpacity onPress={() => formPressed(item)} key="1">
+        <TaskCard
+            title={item.data.content.title}
+            total={1}
+            completed={0}
+            color={DARKBLUE}
+            xp={15}
+            type={'mobile'}
+        />
+    </TouchableOpacity>
+
 )
+const renderFormItems = (forms) => {
+    if(forms == null || forms.length === 0) {
+        return (
+            <Text>
+                There is no available form
+            </Text>
+        )
+    }
+    else{
+        let items = [];
+        for(let i in forms){
+            items.push(renderFormItem(forms[i]))
+        }
+        return (
+            <View>
+                {items}
+            </View>
+        )
+    }
+}
 export default function HomePage ({navigation}) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [forms, setFormsState] = useState();
     const user = useSelector((state) => state.mainReducer.user);
     //const dispatch = useDispatch();
     //dispatch(fetchUserForms());
-
+    useEffect(() => {
+        Promise.all(setForms(user.forms)).then((values) => {
+            if(Array.isArray(values))
+                setFormsState(values);
+        });
+    })
     return (
         <Background>
             <ScrollView>
@@ -87,11 +114,7 @@ export default function HomePage ({navigation}) {
                     <Text style={styles.showMoreButton}>Show all</Text>
                 </TouchableOpacity>
                 <Text style={styles.sectionTitle}>Forms</Text>
-                <FlatList
-                    data={user.forms}
-                    renderItem={renderFormItem}
-                    keyExtractor={item => item}
-                />
+                {renderFormItems(forms)}
                 <View  style={styles.space}/>
             </ScrollView>
 

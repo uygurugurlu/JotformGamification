@@ -52,3 +52,18 @@ export const getFormDetail  = async (id) => await api.get(`${BASE_URL}${apiEndpo
     }
 });
 
+export const getFormQuestions  = async (id) => await api.get(`${BASE_URL}${apiEndpoints.form}/${id}/questions`, {
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    },
+    params: {
+        apiKey: API_KEY,
+        id: id
+
+    }
+});
+
+
+
