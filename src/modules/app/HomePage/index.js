@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import HeaderProfile from "../../components/HeaderProfileComponent";
 import {USERAVATAR1} from "../../../constants/images";
 import ProgressWheel from "../../components/ProgressWheelComponent";
@@ -88,6 +88,7 @@ export default function HomePage ({navigation}) {
                 setFormsState(values);
         });
     })
+
     return (
         <Background>
             <ScrollView>
@@ -106,7 +107,6 @@ export default function HomePage ({navigation}) {
                     innerBorderStyle={styles.buttonGroupInnerBorderStyle}
                     containerStyle={styles.buttonGroupContainer}
                 />
-
                 <TaskCard title={"Fix User Login Bug"} total={10} completed={2} color={DARKBLUE} xp={89} type={'mobile'}/>
                 <TaskCard title={"Fix User Login Bug"} total={10} completed={4} color={YELLOW} xp={89} type={'mobile'}/>
                 <TaskCard title={"Fix User Login Bug"} total={10} completed={9} color={BLUE} xp={89} type={'mobile'}/>

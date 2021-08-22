@@ -44,5 +44,14 @@ export const styles = StyleSheet.create({
         height: 40,
         marginHorizontal: 10,
         borderWidth: 1,
+        borderRadius: 7,
+        borderColor: 'rgb(50,50,50)',
+        padding: 10
     },
+    picker: {
+        height: 40,
+    },
+    submitContainer: {
+        alignItems: 'center'
+    }
 })
