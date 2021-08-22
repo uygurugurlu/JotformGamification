@@ -15,7 +15,7 @@ async function closeSplash () {
         }
         dispatch(setSplashVisible(false));
 
-    }, 1000)
+    }, 0)
 
 }
 export default function SplashPage () {

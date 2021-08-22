@@ -17,58 +17,69 @@ import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import {firstTimeLogin, fetchUserForms} from "../../../store/Actions";
 import {getFormDetail, getFormQuestions} from "../../../api/api";
+import {FillFormModal} from "../../components/FillFormModalComponent";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
-const setForms = (forms) => {
-    let formList = []
-    for (let i in forms) {
-        let formItem = getFormDetail(forms[i])
-        formList.push(formItem)
-    }
-    return formList
-}
-const formPressed = async (item) => {
-    let questions = await getFormQuestions(item.data.content.id)
-    console.log(questions)
-}
-const renderFormItem =  (item) => (
-    <TouchableOpacity onPress={() => formPressed(item)} key="1">
-        <TaskCard
-            title={item.data.content.title}
-            total={1}
-            completed={0}
-            color={DARKBLUE}
-            xp={15}
-            type={'mobile'}
-        />
-    </TouchableOpacity>
 
-)
-const renderFormItems = (forms) => {
-    if(forms == null || forms.length === 0) {
-        return (
-            <Text>
-                There is no available form
-            </Text>
-        )
-    }
-    else{
-        let items = [];
-        for(let i in forms){
-            items.push(renderFormItem(forms[i]))
-        }
-        return (
-            <View>
-                {items}
-            </View>
-        )
-    }
-}
 export default function HomePage ({navigation}) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [forms, setFormsState] = useState();
+    const [formModalVisible, setFormModalVisible] = useState(false);
+    const [formContent, setFormContent] = useState();
     const user = useSelector((state) => state.mainReducer.user);
+    function handleFormClose() {
+        setFormModalVisible(false)
+    }
+
+    const setForms = (forms) => {
+        let formList = []
+        for (let i in forms) {
+            let formItem = getFormDetail(forms[i])
+            formList.push(formItem)
+        }
+        return formList
+    }
+    const formPressed = async (item) => {
+        setFormModalVisible(true)
+        setFormContent(await getFormQuestions(item.data.content.id))
+    }
+    const renderFormItem =  (item) => (
+        <TouchableOpacity onPress={() => formPressed(item)} key={item.data.content.id}>
+            <TaskCard
+                title={item.data.content.title}
+                total={1}
+                completed={0}
+                color={DARKBLUE}
+                xp={15}
+                type={'mobile'}
+            />
+        </TouchableOpacity>
+
+    )
+    const renderFormItems = (forms) => {
+        if(forms == null || forms.length === 0) {
+            return (
+                <Text>
+                    There is no available form
+                </Text>
+            )
+        }
+        else{
+            let items = [];
+            for(let i in forms){
+                items.push(renderFormItem(forms[i]))
+            }
+            return (
+                <View>
+                    {items}
+                </View>
+            )
+        }
+    }
+
+
+
     //const dispatch = useDispatch();
     //dispatch(fetchUserForms());
     useEffect(() => {
@@ -117,8 +128,11 @@ export default function HomePage ({navigation}) {
                 {renderFormItems(forms)}
                 <View  style={styles.space}/>
             </ScrollView>
-
-
+            <FillFormModal
+                visible={formModalVisible}
+                setNotVisible={() => handleFormClose()}
+                formContent={formContent}
+            />
 
         </Background>
     );
