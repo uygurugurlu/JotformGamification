@@ -8,6 +8,7 @@ import {DARKBLUE} from "../../../constants/colors";
 
 
 export default function HeaderProfile ({avatar, name, level, progress}) {
+    if(progress == NaN || progress > 1.0 || progress < 0.0) progress = 0.0
     return (
         <View style={styles.container}>
             <View style={styles.avatarContainer}>
