@@ -112,7 +112,7 @@ export default function HomePage ({navigation}) {
     const renderPinnedDailyTasks = () => {
         let dailyTasks = tasks.filter(task => task.isCompleted === false && task.isPinned === true && task.taskType === "daily")
         if(dailyTasks.length === 0){
-            return (<Text>There is no available tasks to show</Text>)
+            return (<Text style={styles.notAvailable}>There is no available tasks to show</Text>)
         }
         return( dailyTasks.map( (x) => {
             return(
@@ -122,7 +122,7 @@ export default function HomePage ({navigation}) {
     const renderPinnedWeeklyTasks = () => {
         let dailyTasks = tasks.filter(task => task.isCompleted === false && task.isPinned === true && task.taskType === "weekly")
         if(dailyTasks.length === 0) {
-            return (<Text>There is no available tasks to show</Text>)
+            return (<Text style={styles.notAvailable}>There is no available tasks to show</Text>)
         }
         return( dailyTasks.map( (x) => {
             return(
@@ -132,7 +132,7 @@ export default function HomePage ({navigation}) {
     const renderPinnedCompletedTasks = () => {
         let dailyTasks = tasks.filter(task => task.isCompleted === true && task.isPinned === true)
         if(dailyTasks.length === 0) {
-            return (<Text>There is no available tasks to show</Text>)
+            return (<Text style={styles.notAvailable}>There is no available tasks to show</Text>)
         }
         return( dailyTasks.map( (x) => {
             return(
@@ -151,13 +151,25 @@ export default function HomePage ({navigation}) {
             return renderPinnedCompletedTasks()
         }
     }
+    const getDailyPercent = () => {
+        let completedDaily = tasks.filter(task => task.isCompleted === true && task.taskType === "daily").length
+        let total = tasks.filter(task => task.taskType === "daily").length
+        if(total === 0) return 0
+        return completedDaily * 1.0 / total * 100
+    }
+    const getWeeklyPercent = () => {
+        let completedWeekly = tasks.filter(task => task.isCompleted === true && task.taskType === "weekly").length
+        let total = tasks.filter(task => task.taskType === "weekly").length
+        if(total === 0) return 0
+        return completedWeekly * 1.0 / total * 100
+    }
     return (
         <Background>
             <ScrollView>
                 <HeaderProfile avatar={USERAVATAR1} name={user.name} level={getCurrentLevel().level} progress={getCurrentLevel().progress}/>
                 <View style={styles.progressWheelsContainer}>
-                    <ProgressWheel percent={50} text={'Daily Tasks'} wheelColor={GREEN} textColor={GREEN} />
-                    <ProgressWheel percent={31} text={'Weekly Tasks'} wheelColor={BLUE} textColor={BLUE} />
+                    <ProgressWheel percent={getDailyPercent()} text={'Daily Tasks'} wheelColor={GREEN} textColor={GREEN} />
+                    <ProgressWheel percent={getWeeklyPercent()} text={'Weekly Tasks'} wheelColor={BLUE} textColor={BLUE} />
                 </View>
                 <ButtonGroup
                     onPress={(i) => setSelectedIndex(i)}

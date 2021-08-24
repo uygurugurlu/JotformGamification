@@ -46,5 +46,11 @@ export const styles = StyleSheet.create({
     },
     space: {
         height: 20,
+    },
+    notAvailable: {
+        textAlign: 'center',
+        fontSize: 15,
+        color: 'rgb(100,100,100)',
+        marginVertical: 15,
     }
 });
