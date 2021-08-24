@@ -62,7 +62,7 @@ export const FillFormModal = (props) => {
     const renderText = (item) => {
         const getValue = () => {
             return submissionList.findIndex(e => e.id == item.qid) === -1 ?
-                "" : submissionList[submissionList.findIndex(e => e.id == item.qid)].value
+                "" : submissionList[submissionList.findIndex(e => e.id === item.qid)].value
         }
         return(
             <View key={item.qid}>
@@ -157,7 +157,7 @@ export const FillFormModal = (props) => {
         for(let i in content) {
             arr.push(content[i])
         }
-        return arr.sort((a,b) =>  (a.order.parseInt - b.order.parseInt));
+        return arr.sort((a,b) =>  a.order.parseInt - b.order.parseInt);
     }
     const renderFormContent = (formContent) => {
         try {
@@ -205,7 +205,6 @@ export const FillFormModal = (props) => {
             )
         }
         catch (e) {
-            console.log(e)
             return (
                 <Text>Form Yükleniyor</Text>
             )

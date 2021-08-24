@@ -2,7 +2,8 @@ import update from 'react-addons-update';
 import {
   SET_FIRST_TIME_LOGIN,
   SET_SPLASH_VISIBLE,
-  USER
+  USER,
+  SET_TASKS
 } from '../Actions/ActionTypes';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   user: null,
   splashVisible: true,
   forms: {},
+  tasks: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +28,10 @@ const reducer = (state = initialState, action) => {
     case USER:
       return (state = update(state, {
         user: { $set: action.user },
+      }));
+    case SET_TASKS:
+      return (state = update(state, {
+        tasks: { $set: action.tasks },
       }));
     default:
       return state;

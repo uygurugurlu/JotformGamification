@@ -5,19 +5,20 @@ import {Background} from "../../components/BackgroundComponent";
 import {DEVICEHEIGHT, DEVICEWIDTH} from "../../../constants/general";
 import firebase from "firebase";
 import {useDispatch, useSelector} from "react-redux";
-import {firstTimeLogin, setUser} from "../../../store/Actions";
+import {firstTimeLogin, setTasks, setUser} from "../../../store/Actions";
 import {loginUser} from "../../../api/api";
 import {readAsyncData} from "../../../utils/readAsyncData";
 import {USER} from "../../../constants/asyncStorageKeys";
 import {storeAsyncData} from "../../../utils/storeAsyncData";
-
-const getUserId = (username) => {
+import {getUserTasks} from "../../../utils/getUserTasks";
+const getUserId = async (username) => {
     const ref = firebase.database().ref()
+
     let userID = -1, user = [];
 
     try {
         let val = [];
-        ref.child('users').orderByChild('username').equalTo(username).on("value", function(snapshot) {
+        await ref.child('users').orderByChild('username').equalTo(username).on("value", function(snapshot) {
             val = snapshot.val()
         });
         if(val.length == 0) {
@@ -31,25 +32,32 @@ const getUserId = (username) => {
 
     }
     catch (e) {
+        console.log(e)
         return {userID,user}
     }
 }
 const login = async (dispatch, username, pass) => {
-    let isSuccess = false
-    await loginUser(username, pass)
-        .then((res) => {
-            isSuccess = res.data.message == "success" ? true : false})
-        .catch(e => console.log(e));
-    if(isSuccess) {
-        let user = getUserId(username)
-        if(user.userID !== -1){
-            await storeAsyncData(USER, user.user)
-            dispatch(setUser(user.user))
-        }else {
-            console.log("user not in firebase")
+    try {
+        let res = await loginUser(username, pass)
+        console.log(res.data.message)
+        let isSuccess = res.data.message == "success" ? true : false
+        if(isSuccess) {
+
+            let user = await getUserId(username)
+            console.log(user)
+            if(user.userID !== -1){
+                await storeAsyncData(USER, user.user)
+                dispatch(setTasks(await getUserTasks(user.userID)))
+                dispatch(setUser(user.user))
+            }else {
+                console.log("user not in firebase")
+            }
         }
+        else console.log("user login jotform failed")
     }
-    else console.log("user login jotform failed")
+    catch (e) {
+        console.log(e)
+    }
 }
 export default function LoginPage ({navigation}) {
     const dispatch = useDispatch();
@@ -57,11 +65,14 @@ export default function LoginPage ({navigation}) {
     const [username, setUsername] = useState('Mirac_Uygur');
     const [pass, setPass] = useState('Uygur2012...');
     useEffect(() => {
-        firebase.database().ref('users/' + 0).on('value', (snapshot) => {
+        firebase.database().ref('users/' + 0).on('value', async (snapshot) => {
             const user = snapshot.val();
             console.log(user);
             dispatch(setUser(user));
+            dispatch(setTasks(await getUserTasks(user.id)))
+
         });
+
     })
     return (
         <Background>

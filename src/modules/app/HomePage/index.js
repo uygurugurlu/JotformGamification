@@ -16,9 +16,12 @@ import {RanksComponent} from "../../components/RanksComponent";
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
 import {firstTimeLogin, fetchUserForms, setUser} from "../../../store/Actions";
-import {getFormDetail, getFormQuestions} from "../../../api/api";
+import {getFormDetail, getFormQuestions, submitForm} from "../../../api/api";
 import {FillFormModal} from "../../components/FillFormModalComponent";
 import firebase from "firebase";
+import {getUserTasks} from "../../../utils/getUserTasks";
+import {Picker} from "@react-native-picker/picker";
+import {getCardColor} from "../../../utils/getCardColor";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
@@ -29,6 +32,7 @@ export default function HomePage ({navigation}) {
     const [formModalVisible, setFormModalVisible] = useState(false);
     const [formContent, setFormContent] = useState();
     const user = useSelector((state) => state.mainReducer.user);
+    const tasks = useSelector((state) => state.mainReducer.tasks);
     function handleFormClose() {
         setFormModalVisible(false)
     }
@@ -98,15 +102,55 @@ export default function HomePage ({navigation}) {
         }
     }
 
-    //const dispatch = useDispatch();
-    //dispatch(fetchUserForms());
     useEffect(() => {
         Promise.all(setForms(user.forms)).then((values) => {
             if(Array.isArray(values))
                 setFormsState(values);
         });
+        renderPinnedDailyTasks()
     })
-
+    const renderPinnedDailyTasks = () => {
+        let dailyTasks = tasks.filter(task => task.isCompleted === false && task.isPinned === true && task.taskType === "daily")
+        if(dailyTasks.length === 0){
+            return (<Text>There is no available tasks to show</Text>)
+        }
+        return( dailyTasks.map( (x) => {
+            return(
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor()} xp={x.xp} type={x.type}/>
+            )} ));
+    }
+    const renderPinnedWeeklyTasks = () => {
+        let dailyTasks = tasks.filter(task => task.isCompleted === false && task.isPinned === true && task.taskType === "weekly")
+        if(dailyTasks.length === 0) {
+            return (<Text>There is no available tasks to show</Text>)
+        }
+        return( dailyTasks.map( (x) => {
+            return(
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor()} xp={x.xp} type={x.type}/>
+            )} ));
+    }
+    const renderPinnedCompletedTasks = () => {
+        let dailyTasks = tasks.filter(task => task.isCompleted === true && task.isPinned === true)
+        if(dailyTasks.length === 0) {
+            return (<Text>There is no available tasks to show</Text>)
+        }
+        return( dailyTasks.map( (x) => {
+            return(
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor()} xp={x.xp} type={x.type}/>
+            )} ));
+    }
+    const handleSelectedIndex = () => {
+        let i = selectedIndex;
+        if(i === 0) {
+            return renderPinnedDailyTasks()
+        }
+        else if (i === 1){
+            return renderPinnedWeeklyTasks()
+        }
+        else if (i ===2) {
+            return renderPinnedCompletedTasks()
+        }
+    }
     return (
         <Background>
             <ScrollView>
@@ -125,9 +169,7 @@ export default function HomePage ({navigation}) {
                     innerBorderStyle={styles.buttonGroupInnerBorderStyle}
                     containerStyle={styles.buttonGroupContainer}
                 />
-                <TaskCard title={"Fix User Login Bug"} total={10} completed={2} color={DARKBLUE} xp={89} type={'mobile'}/>
-                <TaskCard title={"Fix User Login Bug"} total={10} completed={4} color={YELLOW} xp={89} type={'mobile'}/>
-                <TaskCard title={"Fix User Login Bug"} total={10} completed={9} color={BLUE} xp={89} type={'mobile'}/>
+                {handleSelectedIndex()}
                 <TouchableOpacity onPress={() => navigation.navigate('Tasks')}>
                     <Text style={styles.showMoreButton}>Show all</Text>
                 </TouchableOpacity>

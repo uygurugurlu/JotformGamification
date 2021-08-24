@@ -65,5 +65,6 @@ export const getFormQuestions  = async (id) => await api.get(`${BASE_URL}${apiEn
     }
 });
 
+export const submitForm  = async (id, ) => await api.post(`${BASE_URL}${apiEndpoints.form}/${id}/submissions?apiKey=${API_KEY}&submission[3]:"uygurugurlu@gmail.com"&submission[4_first]:"uygur"`);
 
 
