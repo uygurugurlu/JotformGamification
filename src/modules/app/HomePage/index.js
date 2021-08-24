@@ -116,7 +116,7 @@ export default function HomePage ({navigation}) {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor()} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
             )} ));
     }
     const renderPinnedWeeklyTasks = () => {
@@ -126,7 +126,7 @@ export default function HomePage ({navigation}) {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor()} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
             )} ));
     }
     const renderPinnedCompletedTasks = () => {
@@ -136,7 +136,7 @@ export default function HomePage ({navigation}) {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor()} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
             )} ));
     }
     const handleSelectedIndex = () => {
