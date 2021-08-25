@@ -1,6 +1,6 @@
 import {
   SET_FIRST_TIME_LOGIN,
-  USER, SET_SPLASH_VISIBLE, SET_TASKS
+  USER, SET_SPLASH_VISIBLE, SET_TASKS, SET_CHALLENGES
 } from './ActionTypes';
 
 export const firstTimeLogin = (isFirst) => ({
@@ -18,4 +18,8 @@ export const setSplashVisible = (splashVisible) => ({
 export const setTasks = (tasks) => ({
   type: SET_TASKS,
   tasks,
+})
+export const setChallenges = (challenges) => ({
+  type: SET_CHALLENGES,
+  challenges,
 })

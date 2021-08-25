@@ -11,15 +11,6 @@ import {useSelector} from "react-redux";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
-const data = [
-    {id:1, title: 'Task Card Title', total: 15, completed: 10, xp: 64, type: 'mobile'},
-    {id:2, title: 'Task Card Title', total: 15, completed: 10, xp: 64, type: 'mobile'},
-    {id:3, title: 'Task Card Title', total: 15, completed: 10, xp: 64, type: 'mobile'},
-    {id:4, title: 'Task Card Title', total: 15, completed: 10, xp: 64, type: 'mobile'},
-    {id:5, title: 'Task Card Title', total: 15, completed: 10, xp: 64, type: 'mobile'},
-    {id:6, title: 'Task Card Title', total: 15, completed: 10, xp: 64, type: 'mobile'},
-    ];
-
 export default function TasksPage () {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const tasks = useSelector((state) => state.mainReducer.tasks);

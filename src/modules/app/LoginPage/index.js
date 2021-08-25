@@ -5,12 +5,13 @@ import {Background} from "../../components/BackgroundComponent";
 import {DEVICEHEIGHT, DEVICEWIDTH} from "../../../constants/general";
 import firebase from "firebase";
 import {useDispatch, useSelector} from "react-redux";
-import {firstTimeLogin, setTasks, setUser} from "../../../store/Actions";
+import {firstTimeLogin, setChallenges, setTasks, setUser} from "../../../store/Actions";
 import {loginUser} from "../../../api/api";
 import {readAsyncData} from "../../../utils/readAsyncData";
 import {USER} from "../../../constants/asyncStorageKeys";
 import {storeAsyncData} from "../../../utils/storeAsyncData";
 import {getUserTasks} from "../../../utils/getUserTasks";
+import {getUserChallenges} from "../../../utils/getUserChallenges";
 const getUserId = async (username) => {
     const ref = firebase.database().ref()
 
@@ -48,7 +49,10 @@ const login = async (dispatch, username, pass) => {
             if(user.userID !== -1){
                 await storeAsyncData(USER, user.user)
                 dispatch(setTasks(await getUserTasks(user.userID)))
+                dispatch(setChallenges(await getUserChallenges(user.userID)))
+
                 dispatch(setUser(user.user))
+
             }else {
                 console.log("user not in firebase")
             }
@@ -70,6 +74,7 @@ export default function LoginPage ({navigation}) {
             console.log(user);
             dispatch(setUser(user));
             dispatch(setTasks(await getUserTasks(user.id)))
+            dispatch(setChallenges(await getUserChallenges(user.id)))
 
         });
 

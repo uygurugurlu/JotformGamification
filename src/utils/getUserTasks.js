@@ -22,6 +22,7 @@ export const getUserTasks = async (userId) => {
                             type: tasks[i].type,
                             xp: tasks[i].xp,
                             completed: el.completed,
+                            isClaimed: el.isClaimed,
                             isCompleted: el.isCompleted,
                             isPinned: el.isPinned
                         })

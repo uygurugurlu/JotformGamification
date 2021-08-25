@@ -33,6 +33,7 @@ export default function HomePage ({navigation}) {
     const [formContent, setFormContent] = useState();
     const user = useSelector((state) => state.mainReducer.user);
     const tasks = useSelector((state) => state.mainReducer.tasks);
+    const challenges = useSelector((state) => state.mainReducer.challenges);
     function handleFormClose() {
         setFormModalVisible(false)
     }
@@ -163,6 +164,16 @@ export default function HomePage ({navigation}) {
         if(total === 0) return 0
         return completedWeekly * 1.0 / total * 100
     }
+    const renderPinnedChallenges = () => {
+        let total = challenges.filter(challenge => challenge.isCompleted === false && challenge.isPinned === true)
+        if(total.length === 0) {
+            return (<Text style={styles.notAvailable}>There is no available tasks to show</Text>)
+        }
+        return( total.map( (x) => {
+            return(
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={DARKBLUE} color2={RED} xp={x.xp} type={x.type}/>
+        )} ));
+    }
     return (
         <Background>
             <ScrollView>
@@ -190,9 +201,7 @@ export default function HomePage ({navigation}) {
                 <RanksComponent navigation={navigation}/>
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Challenges</Text>
-                <TaskCard title={"Make 1000 Commits"} total={1000} completed={22} color={DARKBLUE} color2={RED} xp={1000} type={'mobile'}/>
-                <TaskCard title={"Make 1000 Commits"} total={1000} completed={22} color={DARKBLUE} color2={RED} xp={1000} type={'mobile'}/>
-                <TaskCard title={"Make 1000 Commits"} total={1000} completed={22} color={DARKBLUE} color2={RED} xp={1000} type={'mobile'}/>
+                {renderPinnedChallenges()}
                 <TouchableOpacity onPress={() => navigation.navigate('ChallengesPage')}>
                     <Text style={styles.showMoreButton}>Show all</Text>
                 </TouchableOpacity>

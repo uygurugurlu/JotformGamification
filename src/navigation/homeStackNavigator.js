@@ -7,11 +7,12 @@ import ProfilePage from "../modules/app/ProfilePage";
 import RanksPage from "../modules/app/RanksPage";
 import UsersListPage from "../modules/app/UsersListPage";
 import {ORANGE} from "../constants/colors";
-import { getHomePageTitle } from "../utils/getHomePageTitle";
+import {useSelector} from "react-redux";
 
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
+    const user = useSelector((state) => state.mainReducer.user);
     return (
             <Stack.Navigator
                 initialRouteName="HomePage"
@@ -34,7 +35,7 @@ export default function HomeStack() {
                             shadowOpacity: 0,
                             backgroundColor: ORANGE,
                         },
-                        title: getHomePageTitle()
+                        title: user.team
                     }}
                 />
                 <Stack.Screen name="ChallengesPage" component={ChallengesPage} />
