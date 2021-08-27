@@ -3,5 +3,6 @@ export {
   setUser,
   setSplashVisible,
   setTasks,
-  setChallenges
+  setChallenges,
+  setSortedUserList
 } from './MainActions';

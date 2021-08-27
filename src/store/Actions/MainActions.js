@@ -1,6 +1,6 @@
 import {
   SET_FIRST_TIME_LOGIN,
-  USER, SET_SPLASH_VISIBLE, SET_TASKS, SET_CHALLENGES
+  USER, SET_SPLASH_VISIBLE, SET_TASKS, SET_CHALLENGES, SET_SORTED_USER_LIST
 } from './ActionTypes';
 
 export const firstTimeLogin = (isFirst) => ({
@@ -22,4 +22,8 @@ export const setTasks = (tasks) => ({
 export const setChallenges = (challenges) => ({
   type: SET_CHALLENGES,
   challenges,
+})
+export const setSortedUserList = (sortedUserList) => ({
+  type: SET_SORTED_USER_LIST,
+  sortedUserList,
 })

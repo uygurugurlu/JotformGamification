@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View} from "react-native";
 import {styles} from "./styles";
 import {RankCard} from "./RankCard";
@@ -9,7 +9,66 @@ import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/ric
 import {Divider} from "react-native-elements/dist/divider/Divider";
 import {ORANGE} from "../../../constants/colors";
 
-export const RanksComponent = ({navigation}) => {
+export const RanksComponent = ({navigation, sortedUserList, userId}) => {
+    const isTopThree = () => {
+        if(sortedUserList.length === 0) return false
+        for(let i =0; i<3 && i<sortedUserList.length; i++) {
+            if(sortedUserList[i].id  === userId)
+                return true
+        }
+        return false
+    }
+    const renderTopThree = () => {
+        if(sortedUserList.length === 0) return
+        let arr = []
+        for(let i =0; i<3 && i<sortedUserList.length; i++) {
+            arr.push(
+                <RankCard
+                    key={sortedUserList[i].id}
+                    rank={i+1} league={DIAMOND}
+                    avatar={USERAVATAR1}
+                    name={sortedUserList[i].name}
+                    team={sortedUserList[i].team}
+                    score={sortedUserList[i].seasonScore}
+                    isMe={userId === sortedUserList[i].id}
+                />
+            )
+        }
+        return (
+            <View>
+                {arr}
+            </View>
+        )
+
+    }
+    const findMe = () => {
+        if(Array.isArray(sortedUserList)){
+            return sortedUserList.findIndex(item => item.id === userId)
+        }
+        else return -1
+    }
+    const renderMe = () => {
+        let me = findMe()
+        if(me === -1) return
+        return(
+            isTopThree() ?
+                (<></>) :
+                (
+                    <>
+                        <DotsComponent color={'#fff'} onPress={() => navigation.navigate('RanksPage')}/>
+                        <RankCard
+                            rank={me+1}
+                            league={SILVER}
+                            avatar={USERAVATAR1}
+                            name={sortedUserList[me].name}
+                            team={sortedUserList[me].team}
+                            score={sortedUserList[me].seasonScore}
+                            isMe={true}
+                        />
+                    </>
+            )
+        )
+    }
     return(
         <View style={styles.container} opacity={0.9}>
             <View style={styles.titleContainer}>
@@ -17,11 +76,9 @@ export const RanksComponent = ({navigation}) => {
                 <Text style={styles.titleText}>Name</Text>
                 <Text style={styles.titleText}>Score</Text>
             </View>
-            <RankCard rank={1} league={DIAMOND} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={2345}/>
-            <RankCard rank={2} league={PLATINUM} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={2245}/>
-            <RankCard rank={3} league={GOLD} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={2134}/>
-            <DotsComponent color={'#fff'} onPress={() => navigation.navigate('RanksPage')}/>
-            <RankCard rank={92} league={SILVER} avatar={USERAVATAR1} name={"Uygur Uğurlu"} team={"Mobile Team"} score={200}/>
+
+            {renderTopThree()}
+            {renderMe()}
             <Divider color={'rgb(200,200,200)'} style={styles.divider}/>
             <View style={styles.buttonContainer}>
                 <AwesomeButtonRick

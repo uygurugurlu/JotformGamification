@@ -1,6 +1,6 @@
 import { api } from './AxiosCacheAdapter';
 
-const API_KEY = '8f684c34617cc1bb45af995a10f06a08';
+const API_KEY = 'b7e0e27ca4cf3e5803f6e5989c815419';
 const BASE_URL = 'https://api.jotform.com';
 const apiEndpoints = {
     forms: '/user/forms',

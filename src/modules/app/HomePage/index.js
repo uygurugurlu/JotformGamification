@@ -15,13 +15,14 @@ import {BLUE, DARKBLUE, GREEN, RED, YELLOW} from "../../../constants/colors";
 import {RanksComponent} from "../../components/RanksComponent";
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
-import {firstTimeLogin, fetchUserForms, setUser} from "../../../store/Actions";
+import {firstTimeLogin, fetchUserForms, setUser, setSortedUserList} from "../../../store/Actions";
 import {getFormDetail, getFormQuestions, submitForm} from "../../../api/api";
 import {FillFormModal} from "../../components/FillFormModalComponent";
 import firebase from "firebase";
 import {getUserTasks} from "../../../utils/getUserTasks";
 import {Picker} from "@react-native-picker/picker";
 import {getCardColor} from "../../../utils/getCardColor";
+import {getSeasonRanks} from "../../../utils/getSeasonRanks";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
@@ -34,6 +35,8 @@ export default function HomePage ({navigation}) {
     const user = useSelector((state) => state.mainReducer.user);
     const tasks = useSelector((state) => state.mainReducer.tasks);
     const challenges = useSelector((state) => state.mainReducer.challenges);
+    const sortedUserList = useSelector((state) => state.mainReducer.sortedUserList);
+    const dispatch = useDispatch();
     function handleFormClose() {
         setFormModalVisible(false)
     }
@@ -47,6 +50,8 @@ export default function HomePage ({navigation}) {
         return formList
     }
     const formPressed = async (item) => {
+
+
         setFormModalVisible(true)
         setFormContent(await getFormQuestions(item.data.content.id))
     }
@@ -102,14 +107,30 @@ export default function HomePage ({navigation}) {
             return({level: "0", progress: 0.0})
         }
     }
-
     useEffect(() => {
+        const sub = firebase.database().ref('users').orderByChild('seasonScore').on('value', (snapshot) => {
+            let users = []
+
+            snapshot.forEach(child => {
+                users.push({
+                    key: child.key,
+                    ...child.val()
+                })
+                return false
+            })
+            users = users.reverse()
+
+            dispatch(setSortedUserList(users));
+        });
         Promise.all(setForms(user.forms)).then((values) => {
             if(Array.isArray(values))
                 setFormsState(values);
         });
-        renderPinnedDailyTasks()
-    })
+        return () => {
+            sub();
+        }
+
+    }, [])
     const renderPinnedDailyTasks = () => {
         let dailyTasks = tasks.filter(task => task.isCompleted === false && task.isPinned === true && task.taskType === "daily")
         if(dailyTasks.length === 0){
@@ -192,21 +213,31 @@ export default function HomePage ({navigation}) {
                     innerBorderStyle={styles.buttonGroupInnerBorderStyle}
                     containerStyle={styles.buttonGroupContainer}
                 />
+
                 {handleSelectedIndex()}
+
                 <TouchableOpacity onPress={() => navigation.navigate('Tasks')}>
                     <Text style={styles.showMoreButton}>Show all</Text>
                 </TouchableOpacity>
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Season Ranks</Text>
-                <RanksComponent navigation={navigation}/>
+                <RanksComponent
+                    navigation={navigation}
+                    sortedUserList={sortedUserList}
+                    userId = {user.id}
+                />
                 <Divider style={{marginVertical: 10}}/>
                 <Text style={styles.sectionTitle}>Challenges</Text>
+
                 {renderPinnedChallenges()}
+
                 <TouchableOpacity onPress={() => navigation.navigate('ChallengesPage')}>
                     <Text style={styles.showMoreButton}>Show all</Text>
                 </TouchableOpacity>
                 <Text style={styles.sectionTitle}>Forms</Text>
+
                 {renderFormItems(forms)}
+
                 <View  style={styles.space}/>
             </ScrollView>
             <FillFormModal

@@ -3,7 +3,8 @@ import {
   SET_FIRST_TIME_LOGIN,
   SET_SPLASH_VISIBLE,
   USER,
-  SET_TASKS, SET_CHALLENGES
+  SET_TASKS, SET_CHALLENGES,
+  SET_SORTED_USER_LIST
 } from '../Actions/ActionTypes';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   forms: {},
   tasks: [],
   challenges: [],
+  sortedUserList : []
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +39,10 @@ const reducer = (state = initialState, action) => {
     case SET_CHALLENGES:
       return (state = update(state, {
         challenges: { $set: action.challenges },
+      }));
+    case SET_SORTED_USER_LIST:
+      return (state = update(state, {
+        sortedUserList: { $set: action.sortedUserList },
       }));
     default:
       return state;

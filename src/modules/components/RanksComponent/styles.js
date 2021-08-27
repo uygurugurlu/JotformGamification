@@ -73,9 +73,17 @@ export const rankCardStyles = StyleSheet.create({
         marginLeft: 15,
 
     },
+    nameMe: {
+        flexDirection: 'row'
+    },
     name: {
         color: '#fff',
         fontSize: 15,
+    },
+    me: {
+        color: '#fff',
+        fontWeight: '700',
+        marginHorizontal: 10,
     },
     team:{
         color: '#fff',

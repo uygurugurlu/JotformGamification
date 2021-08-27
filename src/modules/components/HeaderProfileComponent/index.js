@@ -6,7 +6,14 @@ import {getLevelImage} from "../../../utils/getLevelImage";
 import * as Progress from 'react-native-progress';
 import {DARKBLUE} from "../../../constants/colors";
 
-
+const renderLevelImage = (level) => {
+    if(getLevelImage(level) !== "Error") {
+        return(
+            <Image source={getLevelImage(level)} style={styles.levelImage}/>
+        )
+    }
+    return
+}
 export default function HeaderProfile ({avatar, name, level, progress}) {
     if(progress == NaN || progress > 1.0 || progress < 0.0) progress = 0.0
     return (
@@ -19,7 +26,7 @@ export default function HeaderProfile ({avatar, name, level, progress}) {
             </View>
             <View style={styles.levelContainer}>
                 <View style={styles.levelIconContainer}>
-                    <Image source={getLevelImage(level)} style={styles.levelImage}/>
+                    {renderLevelImage(level)}
                 </View>
                 <View style={styles.levelPartContainer}>
                     <View style={styles.levelTextContainer}>

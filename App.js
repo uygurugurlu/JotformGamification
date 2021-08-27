@@ -23,9 +23,9 @@ function setupUserListener(userId) {
         console.log("user: " + user);
     });
 }
+firebase.initializeApp(firebaseConfig);
 
 export default function App() {
-    firebase.initializeApp(firebaseConfig);
     return (
         <Provider store={configureStore()}>
             <SafeAreaProvider>
