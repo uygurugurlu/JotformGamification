@@ -11,34 +11,33 @@ import {Divider} from "react-native-elements/dist/divider/Divider";
 import {SearchBar} from "react-native-elements/dist/searchbar/SearchBar";
 import {useState} from "react";
 import {SEARCH} from "../../../constants/icons";
-
-const data= [
-    {rank: 1, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "2345"},
-    {rank: 2, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "2145"},
-    {rank: 3, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "1845"},
-    {rank: 4, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "1745"},
-    {rank: 5, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "1645"},
-    {rank: 6, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "1345"},
-    {rank: 7, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "1145"},
-    {rank: 8, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "345"},
-    {rank: 9, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "45"},
-    {rank: 10, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "5"},
-    {rank: 11, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "2"},
-    {rank: 12, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "2"},
-    {rank: 13, avatar:USERAVATAR1, name: "Uygur Uğurlu", team: 'Mobile Team', score: "2"},
-];
+import {useSelector} from "react-redux";
 
 
 export default function RanksPage () {
     const [search, setSearch] = useState('');
-    const renderItem = ({ item }) => {
-        if(item.rank === 1) {
+    const sortedUserList1 = useSelector((state) => state.mainReducer.sortedUserList);
+    const sortedUserList = sortedUserList1.map((item, index) =>
+        ({...item, index: index})
+    )
+    const [userList, setUserList] = useState(sortedUserList);
+    const user = useSelector((state) => state.mainReducer.user);
+    const makeSearch = (key) => {
+        setSearch(key)
+        if(key.length >= 2) {
+            setUserList(sortedUserList.filter(el => el.name.toLowerCase().includes(key)))
+        }
+        else
+            setUserList(sortedUserList)
+    }
+    const renderItem = ({item, index}) => {
+        if(item.index === 0) {
             return(
                 <View style={styles.firstContainer}>
                     <Text style={styles.rankOneText}>1.</Text>
-                    <Text style={styles.scoreText}>{"Score\n"+item.score}</Text>
+                    <Text style={styles.scoreText}>{"Score\n"+item.seasonScore}</Text>
                     <View style={styles.avatarContainer}>
-                        <Image source={item.avatar} style={styles.avatar}/>
+                        <Image source={USERAVATAR1} style={styles.avatar}/>
                         <Image source={getLeagueImage(DIAMOND)} style={styles.leagueImage}/>
                         <Image source={KINGCROWN} style={styles.crown}/>
                     </View>
@@ -51,13 +50,37 @@ export default function RanksPage () {
                 </View>
             );
         }
-        else return <RankCard rank={item.rank} league={DIAMOND} avatar={item.avatar} name={item.name} team={item.team} score={item.score}/>
+        else return (
+            <RankCard
+                rank={item.index +1}
+                league={DIAMOND}
+                avatar={USERAVATAR1}
+                name={item.name}
+                team={item.team}
+                score={item.seasonScore}
+                isMe={user.id === item.id}
+            />
+        )
     };
+    const renderData = () => {
+        if(userList.length === 0) {
+            return(
+                <Text style={styles.notFound}>No user found</Text>
+            )
+        }
+        else return (
+            <FlatList
+                data={userList}
+                renderItem={({item, index}) => renderItem({item, index})}
+                keyExtractor={item => '' + item.id}
+            />
+        )
+    }
     return (
         <Background>
                 <SearchBar
                     placeholder={'Search User'}
-                    onChangeText={(s) => setSearch(s)}
+                    onChangeText={(s) => makeSearch(s)}
                     value={search}
                     containerStyle={styles.searchContainer}
                     placeholderTextColor={'rgb(220,220,220)'}
@@ -71,8 +94,8 @@ export default function RanksPage () {
                     round={false}
                 />
             <View style={styles.container} opacity={0.9}>
-
-                <FlatList data={data} renderItem={renderItem} keyExtractor={item => '' + item.rank}/>
+                {renderData()}
+                <View style={styles.divider}></View>
             </View>
 
         </Background>

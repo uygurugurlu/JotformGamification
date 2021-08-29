@@ -1,9 +1,11 @@
 import {StyleSheet} from "react-native";
 import {DARKBLUE} from "../../../constants/colors";
+import {DEVICEHEIGHT} from "../../../constants/general";
 
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: DARKBLUE,
+        height: DEVICEHEIGHT
 
     },
     firstContainer: {
@@ -76,5 +78,11 @@ export const styles = StyleSheet.create({
     },
     empty: {
         height: 100
+    },
+    notFound: {
+        textAlign:'center',
+        color: 'rgb(220,220,220)',
+        fontWeight: '600',
+        fontSize: 17
     }
 })
