@@ -6,7 +6,7 @@ import {USERAVATAR1} from "../../../constants/images";
 import ProgressWheel from "../../components/ProgressWheelComponent";
 import {styles} from "./styles";
 import {Background} from "../../components/BackgroundComponent";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import {Divider} from "react-native-elements/dist/divider/Divider";
 import {ButtonGroup} from "react-native-elements/dist/buttons/ButtonGroup";
@@ -32,13 +32,20 @@ export default function HomePage ({navigation}) {
     const [forms, setFormsState] = useState();
     const [formModalVisible, setFormModalVisible] = useState(false);
     const [formContent, setFormContent] = useState();
+    const [formId, setFormId] = useState();
     const user = useSelector((state) => state.mainReducer.user);
     const tasks = useSelector((state) => state.mainReducer.tasks);
     const challenges = useSelector((state) => state.mainReducer.challenges);
     const sortedUserList = useSelector((state) => state.mainReducer.sortedUserList);
     const dispatch = useDispatch();
+
+
     function handleFormClose() {
         setFormModalVisible(false)
+        Promise.all(setForms(user.forms)).then((values) => {
+            if(Array.isArray(values))
+                setFormsState(values);
+        });
     }
 
     const setForms = (forms) => {
@@ -51,9 +58,9 @@ export default function HomePage ({navigation}) {
     }
     const formPressed = async (item) => {
 
-
         setFormModalVisible(true)
         setFormContent(await getFormQuestions(item.data.content.id))
+        setFormId(item.data.content.id)
     }
     const renderFormItem =  (item) => (
         <TouchableOpacity onPress={() => formPressed(item)} key={item.data.content.id}>
@@ -71,7 +78,7 @@ export default function HomePage ({navigation}) {
     const renderFormItems = (forms) => {
         if(forms == null || forms.length === 0) {
             return (
-                <Text>
+                <Text style={styles.notAvailable}>
                     There is no available form
                 </Text>
             )
@@ -107,10 +114,21 @@ export default function HomePage ({navigation}) {
             return({level: "0", progress: 0.0})
         }
     }
+    const mounted = useRef();
+
     useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+        }
+        else {
+            Promise.all(setForms(user.forms)).then((values) => {
+                if(Array.isArray(values))
+                    setFormsState(values);
+            });
+        }
         const sub = firebase.database().ref('users').orderByChild('seasonScore').on('value', (snapshot) => {
             let users = []
-
+            if(!snapshot) return false
             snapshot.forEach(child => {
                 users.push({
                     key: child.key,
@@ -130,7 +148,7 @@ export default function HomePage ({navigation}) {
             sub();
         }
 
-    }, [])
+    }, [user])
     const renderPinnedDailyTasks = () => {
         let dailyTasks = tasks.filter(task => task.isCompleted === false && task.isPinned === true && task.taskType === "daily")
         if(dailyTasks.length === 0){
@@ -244,8 +262,8 @@ export default function HomePage ({navigation}) {
                 visible={formModalVisible}
                 setNotVisible={() => handleFormClose()}
                 formContent={formContent}
+                formId={formId}
             />
-
         </Background>
     );
 }

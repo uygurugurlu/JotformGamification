@@ -6,8 +6,13 @@ import { Icon } from 'react-native-elements'
 import {BLUE, ORANGE} from "../../../constants/colors";
 import {Picker} from '@react-native-picker/picker';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
+import {submitForm} from "../../../api/api";
+import {useSelector} from "react-redux";
+import {removeForm} from "../../../utils/removeForm";
 
 export const FillFormModal = (props) => {
+    const user = useSelector((state) => state.mainReducer.user);
+
     const [submissionList, setSubmissionList] = useState([])
 
     const handleSubmissionChange = (id, value) => {
@@ -23,7 +28,7 @@ export const FillFormModal = (props) => {
     }
 
     const renderHeader = (item) => (
-        <View key={item.qid}>
+        <View key={item.order}>
             <Text style={styles.header}>{item.text}</Text>
             <View style={styles.divider}></View>
         </View>
@@ -38,7 +43,7 @@ export const FillFormModal = (props) => {
                     "" : submissionList[submissionList.findIndex(e => e.id == item.qid + "_last")].value
         }
         return (
-            <View key={item.qid}>
+            <View key={item.order}>
                 <Text style={styles.subSectionHeader}>{item.text}</Text>
                 <TextInput
                     style={styles.input}
@@ -65,7 +70,7 @@ export const FillFormModal = (props) => {
                 "" : submissionList[submissionList.findIndex(e => e.id === item.qid)].value
         }
         return(
-            <View key={item.qid}>
+            <View key={item.order}>
                 <Text style={styles.subSectionHeader}>{item.text}</Text>
                 <TextInput
                     style={styles.input}
@@ -95,7 +100,7 @@ export const FillFormModal = (props) => {
             }
         }
         return(
-            <View key={item.qid}>
+            <View key={item.order}>
                 <Text style={styles.subSectionHeader}>{item.text}</Text>
                 <TextInput
                     style={styles.input}
@@ -121,7 +126,7 @@ export const FillFormModal = (props) => {
                 return( <Picker.Item label={x} key={x} value={x}  />)} ));
         }
         return(
-            <View key={item.qid}>
+            <View key={item.order}>
                 <Text style={styles.subSectionHeader}>{item.text}</Text>
                 <Picker
                     selectedValue={getValue()}
@@ -136,28 +141,47 @@ export const FillFormModal = (props) => {
     }
     const renderSubmit = (item) => {
         return(
-            <View key={item.qid} style={styles.submitContainer}>
+            <View key={item.order} style={styles.submitContainer}>
                 <AwesomeButtonRick
                     type="primary"
                     backgroundColor={ORANGE}
                     backgroundDarker={'#be4e04'}
                     textColor={'#fff'}
-                    onPress={() => submitForm()}
+                    onPress={() => submitFormPress()}
                 >
                     {item.text}
                 </AwesomeButtonRick>
             </View>
             )
     }
-    const submitForm = () => {
-        alert(submissionList)
+    const createSubmissionStr = (submissionList) => {
+        let str = ""
+        submissionList.forEach(el => {
+            str += "&submission[" + el.id + "]=" + el.value
+        })
+        return str
+    }
+    const submitFormPress = async () => {
+        try {
+            const res = await submitForm(props.formId, createSubmissionStr(submissionList))
+            if(res.data.responseCode === 200) {
+                removeForm(user.id, props.formId)
+                props.setNotVisible()
+                alert("Your response has been send!");
+            }
+        }
+        catch (e) {
+            console.log(e)
+            alert("There is an error, please check your fields")
+        }
+
     }
     const sortForm = (content) => {
         let arr = []
         for(let i in content) {
             arr.push(content[i])
         }
-        return arr.sort((a,b) =>  a.order.parseInt - b.order.parseInt);
+        return arr.sort((a,b) =>  a.order - b.order);
     }
     const renderFormContent = (formContent) => {
         try {

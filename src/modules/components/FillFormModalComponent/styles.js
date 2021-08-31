@@ -52,6 +52,7 @@ export const styles = StyleSheet.create({
         height: 40,
     },
     submitContainer: {
+        marginVertical: 15,
         alignItems: 'center'
     }
 })
