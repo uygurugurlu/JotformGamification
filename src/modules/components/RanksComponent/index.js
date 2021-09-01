@@ -20,7 +20,6 @@ export const RanksComponent = ({navigation, sortedUserList, userId}) => {
         return false
     }
     const renderTopThree = (sortedUserList) => {
-        console.log(getLeague(3, sortedUserList.length));
         if(sortedUserList.length === 0) return
         let arr = []
         for(let i =0; i<3 && i<sortedUserList.length; i++) {

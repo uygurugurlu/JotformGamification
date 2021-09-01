@@ -6,10 +6,11 @@ import ProfileStack from "./profileStackNavigator";
 import {NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import TasksPage from "../modules/app/TasksPage";
 import { createStackNavigator } from '@react-navigation/stack';
-import {ORANGE} from "../constants/colors";
+import {BLUE, ORANGE} from "../constants/colors";
 import {useSelector} from "react-redux";
 import SplashPage from "../modules/app/SplashPage";
 import LoginStack from "./loginStackNavigator";
+import {Icon} from "react-native-elements";
 
 
 const Tab = createBottomTabNavigator();
@@ -62,10 +63,55 @@ export default function CreateNavigation() {
     }
     return (
         <NavigationContainer theme={MyTheme}>
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={HomeStack} />
-                <Tab.Screen name="Tasks" component={TasksScreen} />
-                <Tab.Screen name="Profile" component={ProfileStack} />
+            <Tab.Navigator
+                tabBarOptions={{
+                    style:{
+                        backgroundColor: ORANGE,
+                    },
+                    inactiveTintColor: '#FFF',
+                    activeTintColor:BLUE,
+
+                }}
+            >
+                <Tab.Screen
+                    name="Home"
+                    component={HomeStack}
+                    options={{
+                        tabBarIcon: ({color}) => (
+                            <Icon
+                                name={'home'}
+                                type='font-awesome-5'
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Tab.Screen
+                    name="Tasks"
+                    component={TasksScreen}
+                    options={{
+                        tabBarIcon: ({color}) => (
+                            <Icon
+                                name={'tasks'}
+                                type='font-awesome-5'
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={ProfileStack}
+                    options={{
+                        tabBarIcon: ({color}) => (
+                            <Icon
+                                name={'user'}
+                                type='font-awesome-5'
+                                color={color}
+                            />
+                        )
+                    }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );
