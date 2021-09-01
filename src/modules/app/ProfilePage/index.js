@@ -12,6 +12,7 @@ import {GREEN} from "../../../constants/colors";
 import {Divider} from "react-native-elements/dist/divider/Divider";
 import {useSelector} from "react-redux";
 import {getCurrentLevel} from "../../../utils/getCurrentLevel";
+import {getLeague} from "../../../utils/getLeague";
 
 const data = [
     {id: 1, icon: require('../../../assets/badges/badge_0000_Katman-1.png'), name: 'badge1', owned: true},
@@ -68,7 +69,7 @@ export default function ProfilePage () {
             <ScrollView style={styles.container}>
                 <ProfileComponent
                     image={USERAVATAR1}
-                    league={DIAMOND}
+                    league={getLeague(findMe() + 1, sortedUserList.length)}
                     name={user.name}
                     team={user.team}
                     score={user.seasonScore}

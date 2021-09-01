@@ -12,6 +12,7 @@ import {SearchBar} from "react-native-elements/dist/searchbar/SearchBar";
 import {useState} from "react";
 import {SEARCH} from "../../../constants/icons";
 import {useSelector} from "react-redux";
+import {getLeague} from "../../../utils/getLeague";
 
 
 export default function RanksPage () {
@@ -38,7 +39,7 @@ export default function RanksPage () {
                     <Text style={styles.scoreText}>{"Score\n"+item.seasonScore}</Text>
                     <View style={styles.avatarContainer}>
                         <Image source={USERAVATAR1} style={styles.avatar}/>
-                        <Image source={getLeagueImage(DIAMOND)} style={styles.leagueImage}/>
+                        <Image source={getLeagueImage(getLeague(1 , sortedUserList.length))} style={styles.leagueImage}/>
                         <Image source={KINGCROWN} style={styles.crown}/>
                     </View>
                     <View style={styles.textsContainer}>
@@ -53,7 +54,7 @@ export default function RanksPage () {
         else return (
             <RankCard
                 rank={item.index +1}
-                league={DIAMOND}
+                league={getLeague(item.index +1, sortedUserList.length)}
                 avatar={USERAVATAR1}
                 name={item.name}
                 team={item.team}

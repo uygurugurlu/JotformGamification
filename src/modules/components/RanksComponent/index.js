@@ -8,6 +8,7 @@ import {DotsComponent} from "../DotsComponent";
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import {Divider} from "react-native-elements/dist/divider/Divider";
 import {ORANGE} from "../../../constants/colors";
+import {getLeague} from "../../../utils/getLeague";
 
 export const RanksComponent = ({navigation, sortedUserList, userId}) => {
     const isTopThree = () => {
@@ -18,14 +19,15 @@ export const RanksComponent = ({navigation, sortedUserList, userId}) => {
         }
         return false
     }
-    const renderTopThree = () => {
+    const renderTopThree = (sortedUserList) => {
+        console.log(getLeague(3, sortedUserList.length));
         if(sortedUserList.length === 0) return
         let arr = []
         for(let i =0; i<3 && i<sortedUserList.length; i++) {
             arr.push(
                 <RankCard
                     key={sortedUserList[i].id}
-                    rank={i+1} league={DIAMOND}
+                    rank={i+1} league={getLeague(i+1, sortedUserList.length)}
                     avatar={USERAVATAR1}
                     name={sortedUserList[i].name}
                     team={sortedUserList[i].team}
@@ -58,7 +60,7 @@ export const RanksComponent = ({navigation, sortedUserList, userId}) => {
                         <DotsComponent color={'#fff'} onPress={() => navigation.navigate('RanksPage')}/>
                         <RankCard
                             rank={me+1}
-                            league={SILVER}
+                            league={getLeague(me+1, sortedUserList.length)}
                             avatar={USERAVATAR1}
                             name={sortedUserList[me].name}
                             team={sortedUserList[me].team}
@@ -77,7 +79,7 @@ export const RanksComponent = ({navigation, sortedUserList, userId}) => {
                 <Text style={styles.titleText}>Score</Text>
             </View>
 
-            {renderTopThree()}
+            {renderTopThree(sortedUserList)}
             {renderMe()}
             <Divider color={'rgb(200,200,200)'} style={styles.divider}/>
             <View style={styles.buttonContainer}>
