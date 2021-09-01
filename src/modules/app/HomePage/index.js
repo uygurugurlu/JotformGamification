@@ -23,6 +23,7 @@ import {getUserTasks} from "../../../utils/getUserTasks";
 import {Picker} from "@react-native-picker/picker";
 import {getCardColor} from "../../../utils/getCardColor";
 import {getSeasonRanks} from "../../../utils/getSeasonRanks";
+import {getCurrentLevel} from "../../../utils/getCurrentLevel";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
@@ -96,24 +97,6 @@ export default function HomePage ({navigation}) {
         }
     }
 
-    const getCurrentLevel = () => {
-        try {
-            let levels = []
-            firebase.database().ref('levelRange').on('value', (snapshot) => {
-                levels = snapshot.val();
-            })
-            if(levels.length === 0) return({level: "0", progress: 0.0})
-            let level = 1
-            levels.forEach(e => {
-                if (user.xp > e) level++
-            })
-            let progress = (user.xp - levels[level]) * 1.0 / (levels[level+1] - levels[level])
-            return({level: ""+level, progress: progress})
-        }
-        catch (e) {
-            return({level: "0", progress: 0.0})
-        }
-    }
     const mounted = useRef();
 
     useEffect(() => {
@@ -216,7 +199,7 @@ export default function HomePage ({navigation}) {
     return (
         <Background>
             <ScrollView>
-                <HeaderProfile avatar={USERAVATAR1} name={user.name} level={getCurrentLevel().level} progress={getCurrentLevel().progress}/>
+                <HeaderProfile avatar={USERAVATAR1} name={user.name} level={getCurrentLevel(user).level} progress={getCurrentLevel(user).progress}/>
                 <View style={styles.progressWheelsContainer}>
                     <ProgressWheel percent={getDailyPercent()} text={'Daily Tasks'} wheelColor={GREEN} textColor={GREEN} />
                     <ProgressWheel percent={getWeeklyPercent()} text={'Weekly Tasks'} wheelColor={BLUE} textColor={BLUE} />

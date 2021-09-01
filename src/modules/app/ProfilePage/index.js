@@ -10,6 +10,8 @@ import {getLevelMaxXp} from "../../../utils/getLevelMaxXp";
 import * as Progress from 'react-native-progress';
 import {GREEN} from "../../../constants/colors";
 import {Divider} from "react-native-elements/dist/divider/Divider";
+import {useSelector} from "react-redux";
+import {getCurrentLevel} from "../../../utils/getCurrentLevel";
 
 const data = [
     {id: 1, icon: require('../../../assets/badges/badge_0000_Katman-1.png'), name: 'badge1', owned: true},
@@ -36,6 +38,16 @@ const data = [
 ];
 
 export default function ProfilePage () {
+    const user = useSelector((state) => state.mainReducer.user);
+    const tasks = useSelector((state) => state.mainReducer.tasks);
+    const challenges = useSelector((state) => state.mainReducer.challenges);
+    const sortedUserList = useSelector((state) => state.mainReducer.sortedUserList);
+    const findMe = () => {
+        if(Array.isArray(sortedUserList)){
+            return sortedUserList.findIndex(item => item.id === user.id)
+        }
+        else return -1
+    }
     const renderItem = (item) => {
         return (
             <View style={styles.badgeIconContainer}>
@@ -44,37 +56,43 @@ export default function ProfilePage () {
 
         )
     }
-
+    const completedTaskCount = (tasks) => {
+        return tasks.filter(task => task.isCompleted === true).length
+    }
+    const completedChallenges = (challenges) => {
+        return challenges.filter(challenge => challenge.isCompleted === true).length
+    }
+    console.log(getCurrentLevel(user).progress)
     return (
         <Background>
             <ScrollView style={styles.container}>
                 <ProfileComponent
                     image={USERAVATAR1}
                     league={DIAMOND}
-                    name={"Uygur Uğurlu"}
-                    team={"Mobile Team"}
-                    score={2982}
-                    rank={105}
+                    name={user.name}
+                    team={user.team}
+                    score={user.seasonScore}
+                    rank={findMe() + 1}
                 />
                 <View style={styles.levelProgressContainer}>
-                    <Text style={styles.titleText}>{'User Level: ' + 5}</Text>
+                    <Text style={styles.titleText}>{'User Level: ' + getCurrentLevel(user).level}</Text>
                     <View style={styles.progressContainer}>
-                        <Text style={styles.levelPrevText}>5</Text>
+                        <Text style={styles.levelPrevText}>{getCurrentLevel(user).level}</Text>
                         <View style={styles.progress}>
                             <Progress.Bar
                                 unfilledColor={'rgb(220,220,220)'}
                                 borderColor={'rgba(0,0,0,0)'}
                                 height={10}
-                                progress={0.5}
+                                progress={getCurrentLevel(user).progress}
                                 width={290}
                                 color={GREEN}
                             />
                         </View>
-                        <Text style={styles.levelNextText}>6</Text>
+                        <Text style={styles.levelNextText}>{parseInt(getCurrentLevel(user).level) + 1}</Text>
                     </View>
                     <View style={styles.xpTextContainer}>
                         <Text style={styles.xpText}>
-                            {246 + ' / ' + getLevelMaxXp(15)}
+                            {user.xp + ' / ' + getLevelMaxXp(parseInt(getCurrentLevel(user).level))}
                         </Text>
                     </View>
                 </View>
@@ -82,11 +100,11 @@ export default function ProfilePage () {
                 <View style={styles.cardsContainer}>
                     <View style={styles.card}>
                         <Text style={styles.cardTitle}>Completed Tasks</Text>
-                        <Text style={styles.cardStat}>26</Text>
+                        <Text style={styles.cardStat}>{completedTaskCount(tasks)}</Text>
                     </View>
                     <View style={styles.card}>
                         <Text style={styles.cardTitle}>Completed Challenges</Text>
-                        <Text style={styles.cardStat}>265</Text>
+                        <Text style={styles.cardStat}>{completedChallenges(challenges)}</Text>
 
                     </View>
                     <View style={styles.card}>
