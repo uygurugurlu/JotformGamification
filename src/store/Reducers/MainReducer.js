@@ -4,7 +4,8 @@ import {
   SET_SPLASH_VISIBLE,
   USER,
   SET_TASKS, SET_CHALLENGES,
-  SET_SORTED_USER_LIST
+  SET_SORTED_USER_LIST,
+  SET_BADGES
 } from '../Actions/ActionTypes';
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   forms: {},
   tasks: [],
   challenges: [],
-  sortedUserList : []
+  sortedUserList : [],
+  badges: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -43,6 +45,10 @@ const reducer = (state = initialState, action) => {
     case SET_SORTED_USER_LIST:
       return (state = update(state, {
         sortedUserList: { $set: action.sortedUserList },
+      }));
+    case SET_BADGES:
+      return (state = update(state, {
+        badges: { $set: action.badges },
       }));
     default:
       return state;

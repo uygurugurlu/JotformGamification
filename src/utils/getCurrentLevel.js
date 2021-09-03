@@ -13,7 +13,6 @@ export const getCurrentLevel = (user) => {
         })
 
         if(level === 0) return({level: "1", progress: 0.0})
-
         let progress = (user.xp - levels[level-1]) * 1.0 / (levels[level] - levels[level-1])
         return({level: ""+level, progress: progress})
     }

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { LogBox } from 'react-native';
+
 import CreateNavigation from "./src/navigation/createNavigation";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import configureStore from "./src/store/ConfigureStore";
@@ -20,12 +22,12 @@ function storeHighScore(userId, score) {
 function setupUserListener(userId) {
     firebase.database().ref('users/' + userId).on('value', (snapshot) => {
         const user = snapshot.val();
-        console.log("user: " + user);
     });
 }
 firebase.initializeApp(firebaseConfig);
 
 export default function App() {
+    LogBox.ignoreAllLogs();//Ignore all log notifications
     return (
         <Provider store={configureStore()}>
             <SafeAreaProvider>

@@ -10,6 +10,7 @@ export const getUserTasks = async (userId) => {
     })
     await db.ref('tasks').on('value',  (snapshot) => {
         tasks = snapshot.val()
+
         try {
             userTasks.forEach(el => {
                 for(let i=0; i<tasks.length; i++){

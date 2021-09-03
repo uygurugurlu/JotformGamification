@@ -6,7 +6,7 @@ export const getLevelMaxXp = (level) => {
         let maxXp = 0
         firebase.database().ref('levelRange').on('value', (snapshot) => {
             snapshot.forEach(el => {
-                if(parseInt(el.key) === parseInt(level + 1)) {
+                if(parseInt(el.key) === parseInt(level)) {
                     maxXp = el.val()
                 }
             })

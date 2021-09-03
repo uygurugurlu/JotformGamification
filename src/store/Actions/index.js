@@ -4,5 +4,6 @@ export {
   setSplashVisible,
   setTasks,
   setChallenges,
-  setSortedUserList
+  setSortedUserList,
+  setBadges,
 } from './MainActions';

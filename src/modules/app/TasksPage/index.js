@@ -14,6 +14,7 @@ const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 export default function TasksPage () {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const tasks = useSelector((state) => state.mainReducer.tasks);
+    const user = useSelector((state) => state.mainReducer.user);
     const renderDailyTasks = () => {
         let dailyTasks = tasks.filter(task => task.isCompleted === false && task.taskType === "daily")
         if(dailyTasks.length === 0){
@@ -21,7 +22,7 @@ export default function TasksPage () {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type} id={x.id} user={user} isCompleted={x.isCompleted}/>
             )} ));
     }
     const renderWeeklyTasks = () => {
@@ -31,7 +32,7 @@ export default function TasksPage () {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type} id={x.id} user={user} isCompleted={x.isCompleted}/>
             )} ));
     }
     const renderCompletedTasks = () => {
@@ -41,7 +42,7 @@ export default function TasksPage () {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type} id={x.id} user={user} isCompleted={x.isCompleted}/>
             )} ));
     }
     const handleSelectedIndex = () => {

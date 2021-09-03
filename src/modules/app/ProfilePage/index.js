@@ -49,6 +49,27 @@ export default function ProfilePage () {
         }
         else return -1
     }
+    const renderBadges = () => {
+        let vals = []
+        for(let i = 0; i<data.length; i=i+7) {
+            vals.push(
+                <View key={data[i].id} style={styles.row}>
+                    {renderItem(data[i])}
+                    {renderItem(data[i+1])}
+                    {renderItem(data[i+2])}
+                    {renderItem(data[i+3])}
+                    {renderItem(data[i+4])}
+                    {renderItem(data[i+5])}
+                    {renderItem(data[i+6])}
+                </View>
+            )
+        }
+        return (
+            <View>
+                {vals}
+            </View>
+        )
+    }
     const renderItem = (item) => {
         return (
             <View style={styles.badgeIconContainer}>
@@ -63,7 +84,6 @@ export default function ProfilePage () {
     const completedChallenges = (challenges) => {
         return challenges.filter(challenge => challenge.isCompleted === true).length
     }
-    console.log(getCurrentLevel(user).progress)
     return (
         <Background>
             <ScrollView style={styles.container}>
@@ -117,7 +137,7 @@ export default function ProfilePage () {
                 <View style={styles.badgeContainer}>
                     <Text style={styles.sectionTitle}>Badges</Text>
                 </View>
-
+                {renderBadges()}
                 <View style={{height: 700}} />
         </ScrollView>
     </Background>

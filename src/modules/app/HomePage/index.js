@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View, RefreshControl} from 'react-native';
 import HeaderProfile from "../../components/HeaderProfileComponent";
 import {USERAVATAR1} from "../../../constants/images";
 import ProgressWheel from "../../components/ProgressWheelComponent";
@@ -15,20 +15,25 @@ import {BLUE, DARKBLUE, GREEN, RED, YELLOW} from "../../../constants/colors";
 import {RanksComponent} from "../../components/RanksComponent";
 import {useDispatch} from 'react-redux';
 import { useSelector } from "react-redux";
-import {firstTimeLogin, fetchUserForms, setUser, setSortedUserList} from "../../../store/Actions";
-import {getFormDetail, getFormQuestions, submitForm} from "../../../api/api";
+import {setSortedUserList, setTasks} from "../../../store/Actions";
+import {getFormDetail, getFormQuestions} from "../../../api/api";
 import {FillFormModal} from "../../components/FillFormModalComponent";
 import firebase from "firebase";
-import {getUserTasks} from "../../../utils/getUserTasks";
-import {Picker} from "@react-native-picker/picker";
 import {getCardColor} from "../../../utils/getCardColor";
-import {getSeasonRanks} from "../../../utils/getSeasonRanks";
 import {getCurrentLevel} from "../../../utils/getCurrentLevel";
+import {getJiraTasks} from "../../../api/atlassianapi";
+import {updateWeeklyTasks} from "../../../utils/updateWeeklyTasks";
+import {getUserTasks} from "../../../utils/getUserTasks";
 
 const buttons = ['Daily Tasks', 'Weekly Tasks', 'Completed']
 
-
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function HomePage ({navigation}) {
+    const [refreshing, setRefreshing] = React.useState(false);
+
+
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [forms, setFormsState] = useState();
     const [formModalVisible, setFormModalVisible] = useState(false);
@@ -57,6 +62,18 @@ export default function HomePage ({navigation}) {
         }
         return formList
     }
+    const onRefresh = () => {
+        setRefreshing(true);
+        Promise.all(setForms(user.forms)).then((values) => {
+            if(Array.isArray(values))
+                setFormsState(values);
+        });
+        updateWeeklyTasks(user.id).then(async () => {
+            dispatch(setTasks(await getUserTasks(user.id)))
+            setRefreshing(false)
+            console.log(user)
+        });
+    };
     const formPressed = async (item) => {
 
         setFormModalVisible(true)
@@ -71,7 +88,7 @@ export default function HomePage ({navigation}) {
                 completed={0}
                 color={DARKBLUE}
                 xp={15}
-                type={'mobile'}
+                type={'everyone'}
             />
         </TouchableOpacity>
 
@@ -100,6 +117,7 @@ export default function HomePage ({navigation}) {
     const mounted = useRef();
 
     useEffect(() => {
+        updateWeeklyTasks(user.id);
         if (!mounted.current) {
             mounted.current = true;
         }
@@ -139,7 +157,7 @@ export default function HomePage ({navigation}) {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type} id={x.id} user={user} isCompleted={x.isCompleted}/>
             )} ));
     }
     const renderPinnedWeeklyTasks = () => {
@@ -149,7 +167,7 @@ export default function HomePage ({navigation}) {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type} id={x.id} user={user} isCompleted={x.isCompleted}/>
             )} ));
     }
     const renderPinnedCompletedTasks = () => {
@@ -159,7 +177,7 @@ export default function HomePage ({navigation}) {
         }
         return( dailyTasks.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={getCardColor(x.id)} xp={x.xp} type={x.type} id={x.id} user={user} isCompleted={x.isCompleted}/>
             )} ));
     }
     const handleSelectedIndex = () => {
@@ -193,16 +211,24 @@ export default function HomePage ({navigation}) {
         }
         return( total.map( (x) => {
             return(
-                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={DARKBLUE} color2={RED} xp={x.xp} type={x.type}/>
+                <TaskCard key={x.id} title={x.title} total={x.total} completed={x.completed} color={DARKBLUE} color2={RED} xp={x.xp} type={x.type}  id={x.id} user={user} isCompleted={x.isCompleted}/>
         )} ));
     }
     return (
         <Background>
-            <ScrollView>
-                <HeaderProfile avatar={USERAVATAR1} name={user.name} level={getCurrentLevel(user).level} progress={getCurrentLevel(user).progress}/>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
+                <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
+                    <HeaderProfile avatar={USERAVATAR1} name={user.name} level={getCurrentLevel(user).level} progress={getCurrentLevel(user).progress}/>
+
+                </TouchableOpacity>
                 <View style={styles.progressWheelsContainer}>
-                    <ProgressWheel percent={getDailyPercent()} text={'Daily Tasks'} wheelColor={GREEN} textColor={GREEN} />
-                    <ProgressWheel percent={getWeeklyPercent()} text={'Weekly Tasks'} wheelColor={BLUE} textColor={BLUE} />
+                    <ProgressWheel percent={Math.round(getDailyPercent() * 100) / 100} text={'Daily Tasks'} wheelColor={GREEN} textColor={GREEN} />
+                    <ProgressWheel percent={Math.round(getWeeklyPercent() * 100) / 100} text={'Weekly Tasks'} wheelColor={BLUE} textColor={BLUE} />
                 </View>
                 <ButtonGroup
                     onPress={(i) => setSelectedIndex(i)}

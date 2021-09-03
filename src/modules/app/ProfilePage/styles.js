@@ -77,7 +77,6 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     badgeContainer: {
-        height: 200,
 
     },
     sectionTitle: {
@@ -92,10 +91,16 @@ export const styles = StyleSheet.create({
       alignItems:'center'
     },
     badgeIcon: {
-        height: 40,
-        width: 40,
+        height: 50,
+        width: 50,
         resizeMode:'contain',
 
-    }
+    },
+    row: {
+      flexDirection:'row',
+      justifyContent:'space-evenly',
+        marginHorizontal: 15,
+        marginVertical: 10
+    },
 
 })
